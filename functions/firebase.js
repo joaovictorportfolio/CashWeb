@@ -5,7 +5,11 @@
 
     getFirestore ,
     collection, 
-    addDoc
+    addDoc,
+     query, 
+     where, 
+     getDocs,
+     limit
   
   
   } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js";
@@ -49,7 +53,7 @@ export async function cadastrarRegistro(nomeCol,obj){
 
 }
   
-  
+
   
   
   

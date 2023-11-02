@@ -1,5 +1,6 @@
 
 import * as funcoesCadastro from './cadastro.js'
+import * as funcoesHistorico from './historico.js'
 
 
 
@@ -41,6 +42,8 @@ export function alterarAba(nomeAba){
         } 
       
       });
+
+      funcoesHistorico.retornarDocumentosGaleria()
       
       break;
 

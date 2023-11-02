@@ -24,6 +24,8 @@ import * as funcoesDarkMode from './functions/darkMode.js'
 import * as funcoesNavegacaoAbas from './functions/navegacaoAbas.js'
 import * as funcoesGerarID from './functions/gerarID.js'
 import * as funcoesdadosLocais from './functions/localstorage.js'
+import * as funcoesHistorico from './functions/historico.js'
+
 
 
 // =================================== EXECUTAR =============================================== //
@@ -71,6 +73,11 @@ else{  funcoesNavegacaoAbas.ativarTab(paginaAtual) ;  }
 
 
 funcoesNavegacaoAbas.eventosTabNavegacao()
+
+
+
+//funcoesHistorico.inserirDadosAleatoriosTransacoes(10)
+
 
 
 

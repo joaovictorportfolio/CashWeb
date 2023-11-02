@@ -124,6 +124,8 @@ class containerpai extends HTMLElement {
 
       <galeria-trasacoes></galeria-trasacoes>
 
+      
+
 
   </div>
     
@@ -407,9 +409,10 @@ class containerpai extends HTMLElement {
     
   <!-- Codigo -->
 
-  <div class=" flex flex-col gap-6">
+  <div id="galeriaTransacoes" class=" flex flex-col gap-6">
 
-      <card-galeria></card-galeria>
+      
+      
    
 
   </div>
@@ -444,6 +447,17 @@ class containerpai extends HTMLElement {
 
       // Atributos
 
+      const id = this.getAttribute('id')
+      const nome = this.getAttribute('nome')
+      const data = this.getAttribute('data')
+      const tipo = this.getAttribute('tipo')
+      const corTipo = this.getAttribute('corTipo') 
+      const valor = this.getAttribute('valor')
+      const observacao = this.getAttribute('observacao') || 'Sem observação'
+
+      let corTipo2
+
+      if( corTipo == 'accent' ){ corTipo2 = 'success' }else{ corTipo2 = 'error' }
 
       // -----------------------------------
 
@@ -454,26 +468,29 @@ class containerpai extends HTMLElement {
   <!-- Codigo -->
 
   <!-- Card -->
-  <div class="card bg-base-100 shadow-xl border ">
 
-    <div class="card-body space-y-2">
+  <div class="card bg-base-100 shadow-xl border cardGaleria w-full">
 
-      <div class=" absolute right-3 top-3"><span class="badge badge-accent lg:text-base text-xs">Receita</span></div>
+
+    <div class="card-body space-y-2 w-full">
+
+      <div class=" absolute right-3 top-3"><span class="badge badge-${corTipo} lg:text-base text-xs">${tipo}</span></div>
         
-        <h2 class="card-title lg:text-lg text-base">Lorem ipsum dolor sit amet</h2>
+        <h2 class="card-title lg:text-lg text-base">${nome}</h2>
 
           <div>
             <label class="text-xs font-semibold opacity-60">Data</label>
-            <p class="font-medium opacity-80 lg:text-base text-sm">10/10/2023</p>
+            <p class="font-medium opacity-80 lg:text-base text-sm">${data}</p>
           </div>
 
 
-        <div>
+        <div class="block">
         
           <label class="text-xs font-semibold opacity-60">Observação</label>
 
           <button class="text-start group">
-          <h3 class="lg:text-sm text-sm line-clamp-2 group-focus:line-clamp-none">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsa iusto nemo, velit ullam animi adipisci accusantium, quidem fuga ad cumque repellat. Reiciendis quis repellat ratione blanditiis obcaecati! Distinctio, saepe temporibus.
+          <h3 class="lg:text-sm text-sm line-clamp-2 group-focus:line-clamp-none">
+          ${observacao}
           </h3>
           </button>
 
@@ -483,7 +500,7 @@ class containerpai extends HTMLElement {
 
            <div>
             <label class="text-xs font-semibold opacity-60">Valor</label>
-            <p class="font-medium text-accent lg:text-base text-base">R$ 100,00</font></p>
+            <p class="font-medium text-${corTipo2} lg:text-base text-base">R$ ${valor}</font></p>
           </div>
 
           <div class="card-actions justify-end flex gap-6 pt-2">
@@ -498,14 +515,14 @@ class containerpai extends HTMLElement {
             </span>
 
             <span>
-            <div class="tooltip tooltip-error cursor-pointer hover:scale-105 group" data-tip="Excluir" onclick="my_modal_4.showModal()">
+            <div class="tooltip tooltip-error cursor-pointer hover:scale-105 group" data-tip="Excluir" onclick="my_modal_${id}.showModal()">
               <svg class="w-6 h-6 group-hover:text-error" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"> <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
               </svg>
             </div>
             </span>
 
             <!-- Modal excluir transacao pai -->
-          <dialog id="my_modal_4" class="modal">
+          <dialog id="my_modal_${id}" class="modal">
 
             <!-- Modal excluir transacao filho -->
             <div class="modal-box">
@@ -547,7 +564,10 @@ class containerpai extends HTMLElement {
 
       </div>
 
-  </div>
+
+      </div>
+
+ 
 
     
 

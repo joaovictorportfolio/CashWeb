@@ -8,7 +8,7 @@ import * as funcoesCadastro from './cadastro.js'
 
 export function alterarAba(nomeAba){
 
-  //console.log(nomeAba)
+  //console.log('alterarAba: '+nomeAba)
 
 
   const section01 = document.getElementById('section01')
@@ -41,8 +41,6 @@ export function alterarAba(nomeAba){
         } 
       
       });
-
-      funcoesCadastro.IniciarCadastro()
       
       break;
 
@@ -63,8 +61,12 @@ export function alterarAba(nomeAba){
         section.classList.add('flex') 
           
       }  
+
+      
     
     })
+
+    funcoesCadastro.IniciarCadastro()
     
       break;
 
@@ -148,7 +150,6 @@ export function alterarAba(nomeAba){
 
   const tabMobileItens = tabMobile.querySelectorAll('button')
 
-  
 
 
   tabHeaderItems.forEach((tabHeaderItem)=>{  
@@ -181,7 +182,12 @@ export function alterarAba(nomeAba){
 
 })
 
+
+localStorage.setItem('paginaAtual',nometab)
+
 alterarAba(nometab)
+
+//console.log('ativarTab: '+nometab)
 
 
  }

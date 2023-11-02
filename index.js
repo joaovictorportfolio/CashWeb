@@ -12,6 +12,8 @@ import * as componentesSwap from './components/Swap.js'
 import * as componentesMenuMobile from './components/MenuMobile.js'
 import * as componentesSections from './components/Sections.js'
 import * as componentesForm from './components/Form.js'
+import * as componentesLoading from './components/Loading.js'
+import * as componentesAlerts from './components/Alerts.js'
 
 // =================================== FUNCOES =============================================== //
 
@@ -45,14 +47,30 @@ for (let i = 0; i < localStorage.length; i++) {
 }
 
 
+//localStorage.clear()
+
+
 // -- Navegacao aba -- //
 
-funcoesNavegacaoAbas.ativarTab('Histórico')
+const paginaAtual =  localStorage.getItem('paginaAtual')
+
+//console.log(paginaAtual)
+
+if( paginaAtual == null ){ 
+
+    
+    localStorage.setItem('paginaAtual','Histórico') ; 
+    
+    funcoesNavegacaoAbas.ativarTab('Histórico')
+
+}
+else{  funcoesNavegacaoAbas.ativarTab(paginaAtual) ;  }
+
 
 funcoesNavegacaoAbas.eventosTabNavegacao()
 
 
-//localStorage.clear()
+
 
   
 

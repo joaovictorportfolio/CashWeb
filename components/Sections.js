@@ -21,7 +21,7 @@ class section01 extends HTMLElement {
 
       <section id="section01" class="h-screen hidden items-center justify-center bg-blue-400 animate__animated animate__fadeIn animate__slow">
       
-        
+      
       
       </section>
 
@@ -61,10 +61,11 @@ class section01 extends HTMLElement {
     
   <!-- Codigo -->
 
-  <section id="section02" class="h-screen flex items-center justify-center animate__animated animate__fadeIn animate__slow">
-  
+  <section id="section02" class="h-screen pt-10  bg-base-100 flex items-center max-lg:items-start justify-center animate__animated animate__fadeIn animate__slow">
 
-    <form-cadastro class="w-full max-w-sm animate__animated animate__fadeInRight animate__slow"></form-cadastro>
+   <alert-01></alert-01>
+
+    <form-cadastro class="w-full flex items-center justify-center animate__animated animate__fadeInRight animate__slow"></form-cadastro>
   
   
   </section>

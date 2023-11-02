@@ -19,18 +19,12 @@ class formcadastro extends HTMLElement {
   <!-- Codigo -->
 
   
-  <form id="formCadastro" class="card-body bg-base-100 drop-shadow-md scale-[0.90] max-w-sm lg:scale-95 lg:mt-10 relative">
+  <form id="formCadastro" class="card-body bg-base-100 drop-shadow-md scale-[0.85] lg:max-w-[55%] max-w-md lg:scale-95 lg:mt-10 relative grid grid-cols-2 max-lg:grid-cols-1 border rounded-xl" >
 
-  <!-- Loading -->
-  <div class="h-full w-[90%] bg-base-100 opacity-80 hidden items-center justify-center absolute top-0">
-    <div class="flex flex-col items-center gap-4">
-    <span class="loading loading-spinner text-primary"></span>
-    <p class="font-semibold text-primary text-base">Carregando</p>
-    </div>
-  </div>
+  <loading-01 class="hidden z-10 objloading h-full w-full absolute top-0 left-0 bg-base-100 opacity-80  items-center justify-center animate__animated animate__zoomIn"></loading-01>
 
   <!-- Nome -->
-  <div class="form-control w-full max-w-sm">
+  <div class="form-control w-full max-w-xs mx-auto">
 
     <label class="label">
 
@@ -38,7 +32,9 @@ class formcadastro extends HTMLElement {
 
     </label>
 
-    <input type="text" placeholder="Nome da transação" required class="input input-bordered input-md w-full max-w-xs" />
+    <span>
+      <input id="inputNome" type="text" placeholder="Nome da transação" required class="input input-bordered input-md w-full max-w-xs" />
+    </span>
 
     <label class="label">
 
@@ -50,7 +46,7 @@ class formcadastro extends HTMLElement {
 
    <!-- Valor -->
 
-   <div class="form-control w-full max-w-sm">
+   <div class="form-control w-full max-w-xs mx-auto">
 
     <label class="label">
 
@@ -58,8 +54,10 @@ class formcadastro extends HTMLElement {
 
     </label>
 
-    <input type="number" min="1" step="1" placeholder="Valor da transação" required class="input input-bordered input-md w-full max-w-xs" />
-
+    <span>
+      <input id="inputValor" type="number" min="1" step="0.1" placeholder="Valor da transação" required class="input input-bordered input-md w-full max-w-xs" />
+    </span>
+    
     <label class="label">
 
       <span class="label-text-alt spanMensagemInput"></span>
@@ -69,7 +67,7 @@ class formcadastro extends HTMLElement {
   </div>
 
   <!-- Data -->
-  <div class="form-control w-full max-w-xs">
+  <div class="form-control w-full max-w-xs mx-auto">
 
     <label class="label">
 
@@ -77,7 +75,9 @@ class formcadastro extends HTMLElement {
 
     </label>
 
-    <input type="date" required class="input input-bordered input-md w-full max-w-xs" />
+    <span>
+      <input id="inputData" type="date" required class="input input-bordered input-md w-full max-w-xs" />
+    </span>
 
     <label class="label">
 
@@ -88,7 +88,7 @@ class formcadastro extends HTMLElement {
   </div>
 
   <!-- Tipo -->
-  <div class="form-control w-full max-w-xs">
+  <div class="form-control w-full max-w-xs mx-auto">
 
     <label class="label">
 
@@ -96,11 +96,13 @@ class formcadastro extends HTMLElement {
 
     </label>
 
-    <select required class="select select-bordered">
-      <option value="" disabled selected>Selecione o tipo</option>
-      <option value="Receita">Receita</option>
-      <option value="Despesa">Despesa</option>
-    </select>
+    <span class="w-full">
+      <select id="inputTipo" required class="select select-bordered w-full">
+        <option value="" disabled selected>Selecione o tipo</option>
+        <option value="Receita">Receita</option>
+        <option value="Despesa">Despesa</option>
+      </select>
+    </span>
 
      <label class="label">
 
@@ -110,8 +112,29 @@ class formcadastro extends HTMLElement {
 
   </div>
 
+  <!-- Observação -->
+  <div class="form-control w-full max-w-xs mx-auto">
+
+    <label class="label">
+
+      <span class="label-text">Observação</span>
+
+    </label>
+
+    <span class="w-full">
+      <textarea id="inputObservacao" class="w-full textarea textarea-bordered resize-none" placeholder="Escreva aqui"></textarea>
+    </span>
+
+    <label class="label">
+
+      <span class="label-text-alt spanMensagemInput"></span>
+
+    </label>
+
+  </div>
+
   <!-- Botao -->
-  <div class="form-control mt-6 max-w-xs">
+  <div class="form-control mt-6 max-w-xs mx-auto w-full lg:flex lg:justify-center">
 
     <button class="btn btn-primary ">Cadastrar</button>
 

@@ -19,11 +19,12 @@ class section01 extends HTMLElement {
     
   <!-- Codigo -->
 
-      <section id="section01" class="h-screen hidden items-center justify-center bg-blue-400 animate__animated animate__fadeIn animate__slow">
+  <section id="section01" class="lg:h-screen pt-10 lg:pt-24  bg-base-100 flex items-start justify-center animate__animated animate__fadeIn animate__slow">
+
+       <container-pai class="animate__animated animate__fadeInRight"></container-pai>
       
       
-      
-      </section>
+  </section>
 
 
   <!-- Codigo -->
@@ -65,7 +66,7 @@ class section01 extends HTMLElement {
 
    <alert-01></alert-01>
 
-    <form-cadastro class="w-full flex items-center justify-center animate__animated animate__fadeInRight animate__slow"></form-cadastro>
+    <form-cadastro class="w-full flex items-center justify-center animate__animated animate__fadeInRight"></form-cadastro>
   
   
   </section>

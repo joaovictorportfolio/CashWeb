@@ -30,6 +30,8 @@ export function IniciarCadastro(){
   const inputTipo = formulario.querySelector('#inputTipo')
   const inputObservacao = formulario.querySelector('#inputObservacao')
 
+  const idUsuario = localStorage.getItem('idUsuario')
+
   // ----------------------------
 
   formulario.reset()
@@ -42,12 +44,13 @@ export function IniciarCadastro(){
 
     const objFormulario = {
 
+      idUsuario : idUsuario ,
       nome: inputNome.value ,
       valor: parseFloat(inputValor.value) ,
       data: inputData.value ,
       tipo: inputTipo.value ,
       observacao: inputObservacao.value 
-  
+      
   
     }
 
@@ -63,6 +66,8 @@ export function IniciarCadastro(){
     // cadastrar
 
     if( resultado == true ){
+
+      //console.log('Transacao cadastrada!')
 
       alert.classList.add('alert-success')
       mensagemAlerta.textContent=`Transação de ${inputTipo.value} cadastrada com sucesso!`

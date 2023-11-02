@@ -20,7 +20,7 @@ class header01 extends HTMLElement {
 
   <div class="navbar bg-base-100 drop-shadow-md  rounded-b-xl z-10 fixed w-full ">
 
-    <div class="navbar-start">
+    <div class="navbar-start ">
 
       <logo-01 urlImagem="https://i.ibb.co/dPKTnGH/logo.png" ></logo-01>
 

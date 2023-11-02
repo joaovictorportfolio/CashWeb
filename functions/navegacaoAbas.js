@@ -1,5 +1,5 @@
 
-
+import * as funcoesCadastro from './cadastro.js'
 
 
 
@@ -40,7 +40,9 @@ export function alterarAba(nomeAba){
             
         } 
       
-      })
+      });
+
+      funcoesCadastro.IniciarCadastro()
       
       break;
 
@@ -95,6 +97,106 @@ export function alterarAba(nomeAba){
 
  }
 
+ export function eventosTabNavegacao(){
+
+  const tabHeader = document.getElementById('tabHeader')
+
+  const tabHeaderItems = tabHeader.querySelectorAll('a')
+
+  tabHeaderItems.forEach((tabHeaderItem)=>{ 
+    
+    tabHeaderItem.addEventListener('click',()=>{
+
+      tabHeaderItems.forEach((tabHeaderItem)=>{  tabHeaderItem.classList.remove('tab-active') })
+
+      tabHeaderItem.classList.add('tab-active')
+
+        alterarAba( tabHeaderItem.textContent )
+
+
+    })
+
+
+    })
+
+  // ---------------------------------------------
+
+  const tabMobile = document.getElementById('tabMobileNavegacao')
+
+  const tabMobileItens = tabMobile.querySelectorAll('button')
+
+  tabMobileItens.forEach((tabMobileItem)=>{ 
+    
+    tabMobileItem.addEventListener('click',()=>{
+
+      tabMobileItens.forEach((tabMobileItem)=>{  tabMobileItem.classList.remove('text-primary') })
+
+      tabMobileItem.classList.add('text-primary')
+
+      const tabMobileItemSpan = tabMobileItem.querySelector('span')
+
+      alterarAba( tabMobileItemSpan.textContent )
+
+
+    })
+
+
+
+
+    })
+
+
+
+
+ }
+
+ export function ativarTab(nometab){
+
+  const tabHeader = document.getElementById('tabHeader')
+
+  const tabHeaderItems = tabHeader.querySelectorAll('a')
+
+  const tabMobile = document.getElementById('tabMobileNavegacao')
+
+  const tabMobileItens = tabMobile.querySelectorAll('button')
+
+  
+
+
+  tabHeaderItems.forEach((tabHeaderItem)=>{  
+    
+    tabHeaderItem.classList.remove('tab-active') 
+
+    if(tabHeaderItem.textContent==nometab){
+
+      tabHeaderItem.classList.add('tab-active')
+
+    }
+  
+  })
+
+  tabMobileItens.forEach((tabMobileItem)=>{ 
+    
+    const tabMobileItemSpan = tabMobileItem.querySelector('span')
+
+    tabMobileItem.classList.remove('text-primary') 
+
+    if(tabMobileItemSpan.textContent==nometab){
+
+    
+
+    tabMobileItem.classList.add('text-primary')
+  
+  }
+
+  
+
+})
+
+alterarAba(nometab)
+
+
+ }
 
   
   

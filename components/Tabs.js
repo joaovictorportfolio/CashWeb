@@ -1,6 +1,6 @@
 
 
-import * as funcoesNavegacaoAbas from '../functions/navegacaoAbas.js'
+
 
 // =================================== COMPONENTES =============================================== //
 
@@ -38,28 +38,6 @@ class tabs01 extends HTMLElement {
 
 
       // Metodos
-
-      const items = this.querySelectorAll('a')
-
-
-
-      items.forEach((item)=>{ 
-        
-        item.addEventListener('click',()=>{
-
-          items.forEach((item)=>{  item.classList.remove('tab-active') })
-
-          item.classList.add('tab-active')
-
-          funcoesNavegacaoAbas.alterarAba( item.textContent )
-
-
-        })
-
-
-
-
-       })
 
 
     

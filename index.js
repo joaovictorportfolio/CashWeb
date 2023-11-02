@@ -11,6 +11,7 @@ import * as componentesTabs from './components/Tabs.js'
 import * as componentesSwap from './components/Swap.js'
 import * as componentesMenuMobile from './components/MenuMobile.js'
 import * as componentesSections from './components/Sections.js'
+import * as componentesForm from './components/Form.js'
 
 // =================================== FUNCOES =============================================== //
 
@@ -47,6 +48,8 @@ for (let i = 0; i < localStorage.length; i++) {
 // -- Navegacao aba -- //
 
 funcoesNavegacaoAbas.alterarAba('Histórico')
+
+funcoesNavegacaoAbas.eventosTabNavegacao()
 
 
 //localStorage.clear()

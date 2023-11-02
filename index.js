@@ -47,7 +47,7 @@ for (let i = 0; i < localStorage.length; i++) {
 
 // -- Navegacao aba -- //
 
-funcoesNavegacaoAbas.alterarAba('Histórico')
+funcoesNavegacaoAbas.ativarTab('Histórico')
 
 funcoesNavegacaoAbas.eventosTabNavegacao()
 

@@ -28,11 +28,13 @@ class header01 extends HTMLElement {
 
     <div class="navbar-center ">
 
+    <tabs-01></tabs-01>
+
     </div>
 
     <div class="navbar-end ">
 
-      <tabs-01></tabs-01>
+      
 
       <swap-01></swap-01>
 

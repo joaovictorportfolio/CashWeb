@@ -7,6 +7,7 @@
 
 .btn:hover{@apply scale-105}
 
+.tab-active{@apply bg-transparent text-primary font-semibold !important}
 
 /* Geral */
 

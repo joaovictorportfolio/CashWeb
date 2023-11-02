@@ -18,7 +18,7 @@ class swap01 extends HTMLElement {
     
   <!-- Codigo -->
 
-  <label id="labCheckDark" class="swap swap-rotate mr-4 space-x-10">
+  <label id="labCheckDark" class="swap swap-rotate mr-6 space-x-10">
 
     <!-- this hidden checkbox controls the state -->
     <input type="checkbox" />

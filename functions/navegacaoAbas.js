@@ -97,45 +97,33 @@ export function alterarAba(nomeAba){
 
  }
 
+
+
  export function eventosTabNavegacao(){
 
   const tabHeader = document.getElementById('tabHeader')
 
   const tabHeaderItems = tabHeader.querySelectorAll('a')
 
-  tabHeaderItems.forEach((tabHeaderItem)=>{ 
-    
-    tabHeaderItem.addEventListener('click',()=>{
-
-      tabHeaderItems.forEach((tabHeaderItem)=>{  tabHeaderItem.classList.remove('tab-active') })
-
-      tabHeaderItem.classList.add('tab-active')
-
-        alterarAba( tabHeaderItem.textContent )
-
-
-    })
-
-
-    })
-
-  // ---------------------------------------------
-
   const tabMobile = document.getElementById('tabMobileNavegacao')
 
   const tabMobileItens = tabMobile.querySelectorAll('button')
+
+  tabHeaderItems.forEach((tabHeaderItem)=>{ 
+    
+    tabHeaderItem.addEventListener('click',()=>{ ativarTab( tabHeaderItem.textContent )})
+
+
+    })
+
 
   tabMobileItens.forEach((tabMobileItem)=>{ 
     
     tabMobileItem.addEventListener('click',()=>{
 
-      tabMobileItens.forEach((tabMobileItem)=>{  tabMobileItem.classList.remove('text-primary') })
-
-      tabMobileItem.classList.add('text-primary')
-
       const tabMobileItemSpan = tabMobileItem.querySelector('span')
 
-      alterarAba( tabMobileItemSpan.textContent )
+      ativarTab( tabMobileItemSpan.textContent )
 
 
     })
@@ -144,11 +132,11 @@ export function alterarAba(nomeAba){
 
 
     })
-
-
 
 
  }
+
+ 
 
  export function ativarTab(nometab){
 

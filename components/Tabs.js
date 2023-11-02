@@ -20,7 +20,7 @@ class tabs01 extends HTMLElement {
     
   <!-- Codigo -->
 
-  <div id="tabHeader" class="tabs tabs-boxed hidden lg:flex font-semibold">
+  <div id="tabHeader" class="tabs tabs-boxed hidden lg:flex font-semibold bg-transparent">
 
     <a class="tab tab-active">Histórico</a> 
 

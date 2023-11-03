@@ -53,6 +53,8 @@ export async function iniciarSecaoHistorico(){
 
   retornarListaInputPesquisa()
 
+  retornarListasFiltro()
+
   limparGaleria()
 
   retornarTodosDocumentos()
@@ -71,12 +73,19 @@ export function inserirDadosAleatoriosTransacoes(totalTransacoes){
 
   for (let i = 0; i < totalTransacoes; i++) {
 
+    const data = generateRandomDate(3)
+
+    const vmes = dataParaNomeDoMes(data)
+    const vano = extrairAnoDaData(data)
+
     const objFormulario = {
 
       idUsuario : idUsuario ,
       nome: `Transação ${i}` ,
       valor: (1 + Math.random() * (1000 - 1)).toFixed(2) ,
-      data: generateRandomDate(3) ,
+      data: data ,
+      mes:vmes,
+      ano:vano.toString(),
       tipo: getRandomValueFromArray(['Receita','Despesa']) ,
       observacao: 'Lorem ipsum dolor sit amet consectetur adipisicing elit,Lorem ipsum dolor sit amet consectetur adipisicing elit.'
       
@@ -400,9 +409,19 @@ export async function adicionarEventos(){
 
   const btnPesquisarNome = document.getElementById("btnPesquisarNome")
 
+  const btnFiltro = document.getElementById("btnFiltro")
 
+  const atualizar = document.getElementById('atualizar')
+
+  atualizar.addEventListener('click',()=>{ retornarTodosDocumentos() })
+
+
+  btnFiltro.addEventListener('click',()=>{ filtrarGaleria() })
 
   btnPesquisarNome.addEventListener('click',()=>{ pesquisarInputGaleria() })
+
+
+
 
   spinnerLoadingGaleria.addEventListener('click', async function() {
 
@@ -431,18 +450,6 @@ export async function adicionarEventos(){
 
 }
 
-
-// ----------------------------------------------------------------------------
-
-
-function limparObjetoPai(container) {
-
-  //const container = document.getElementById('galeriaTransacoes')
-
-  while (container.firstChild) {
-    container.removeChild(container.firstChild);
-  }
-}
 
 
 // ----------------------------------------------------------------------------
@@ -473,6 +480,8 @@ function pesquisarInputGaleria(){
 
 }
 
+// ----------------------------------------------------------------------------
+
 
 function converterData(dataNoFormatoISO) {
   const partesData = dataNoFormatoISO.split('/'); // Divide a data em partes
@@ -492,7 +501,218 @@ function converterData(dataNoFormatoISO) {
   return dataFormatada;
 }
 
+// ----------------------------------------------------------------------------
 
 
+
+// ----------------------------------------------------------------------------
+
+
+export async function retornarListasFiltro(){
+
+  const selectMes = document.getElementById("selectMes")
+
+  const selectAno = document.getElementById("selectAno")
+
+  const idUsuario = localStorage.getItem('idUsuario')
+
+  const col = collection(db, 'transacoes')
+
+  const q = query(col, where("idUsuario", "==", idUsuario));
+
+  const querySnapshot = await getDocs(q);
+
+  const listaItens = []
+  const listaItens2 = []
+
+   limparObjetoPai(selectMes)
+   limparObjetoPai(selectAno)
+
+      const novoElemnto = document.createElement('option')
   
+      novoElemnto.innerHTML = '<option disabled selected value="">Mês</option>'
+      
+      selectMes.appendChild(novoElemnto)
+
+      const novoElemnto2 = document.createElement('option')
   
+      novoElemnto2.innerHTML = '<option disabled selected value="">Ano</option>'
+      
+      selectAno.appendChild(novoElemnto2)
+
+  for (const doc of querySnapshot.docs) {
+
+    const dados = doc.data()
+   
+    const data = dados.data
+
+    const mes =  dataParaNomeDoMes(data)
+
+    const ano =  extrairAnoDaData(data)
+
+
+    if (!listaItens.includes(mes)) {
+
+      listaItens.push(mes)
+
+      const novoElemnto = document.createElement('option')
+  
+      novoElemnto.innerHTML = `
+
+      <option value = ${data} >${mes}</option>
+      
+      `
+      
+  
+      selectMes.appendChild(novoElemnto)
+
+
+
+
+
+    }
+
+    if (!listaItens2.includes(ano)) {
+
+      listaItens2.push(ano)
+
+      const novoElemnto = document.createElement('option')
+  
+      novoElemnto.innerHTML = `
+
+      <option value = ${data} >${ano}</option>
+      
+      `
+      
+  
+      selectAno.appendChild(novoElemnto)
+
+
+
+    }
+
+   
+
+    
+  };
+
+ 
+  const itensLista = listaInputPesquisa.querySelectorAll('li')
+
+  itensLista.forEach((item)=>{ item.addEventListener('click',()=>{ 
+
+    inputPesquisar.value = item.textContent
+
+    listaInputPesquisa.classList.add("hidden")
+
+   }) })
+
+   
+
+}
+
+  
+export function dataParaNomeDoMes(dataString) {
+  const meses = [
+    "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+    "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+  ];
+
+  const partes = dataString.split('/'||'-');
+  if (partes.length === 3) {
+    const mes = parseInt(partes[1], 10);
+    if (mes >= 1 && mes <= 12) {
+      return meses[mes - 1];
+    }
+  }
+ 
+}
+
+export function extrairAnoDaData(dataString) {
+  const partes = dataString.split('/'||'-');
+  if (partes.length === 3) {
+    return parseInt(partes[0], 10);
+  }
+  return null; // Retornar null em caso de data inválida
+}
+
+// ----------------------------------------------------------------------------
+
+
+function limparObjetoPai(container) {
+
+  //const container = document.getElementById('galeriaTransacoes')
+
+  while (container.firstChild) {
+    container.removeChild(container.firstChild);
+  }
+}
+
+
+// ----------------------------------------------------------------------------
+
+function filtrarGaleria(){
+
+  const selectMes = document.getElementById("selectMes")
+  const selectAno = document.getElementById("selectAno")
+  const tipoFiltro = document.getElementById("tipoFiltro")
+  const itens = tipoFiltro.querySelectorAll("a")
+
+  const idUsuario = localStorage.getItem('idUsuario')
+
+  const col = collection(db, 'transacoes')
+
+  const valorMes = selectMes.value
+  const valorAno = selectAno.value
+
+  let vqueryMes = ''
+  let vqueryAno = ''
+  let vqueryTipo = ''
+
+  let filters = [];
+
+  //const tipoFiltro = document.getElementById("tipoFiltro")
+
+  console.log('selectMes: '+valorMes)
+  console.log('selectAno: '+valorAno)
+  
+  if( selectMes.value !== 'Mês' ){
+
+      console.log(valorMes)
+
+       vqueryMes = where('mes','==',valorMes)
+
+       filters.push(vqueryMes);
+
+
+  }
+
+  if( selectAno.value !== 'Ano' ){
+
+    console.log(valorAno)
+
+     vqueryAno = where('ano','==',valorAno.toString())
+
+     filters.push(vqueryAno);
+
+
+  }
+
+  for (const item of itens) {
+    if (item.classList.contains('tab-active')) {
+      
+      if( item.textContent !== "Todas" ){console.log(item.textContent);  vqueryTipo = where('tipo','==',item.textContent);filters.push(vqueryTipo); }
+
+
+    }
+  }
+
+
+  vquery = query(col, where("idUsuario", "==", idUsuario),...filters )
+
+  retornarDocumentosGaleria()
+
+
+}
+
+

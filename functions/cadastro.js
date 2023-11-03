@@ -36,7 +36,7 @@ const db = getFirestore(app);
 
 
 import * as funcoesNavegacaoAbas from './navegacaoAbas.js'
-
+import * as funcoesHistorico from './historico.js'
 
 // =================================== FUNCOES =============================================== //
 
@@ -97,8 +97,17 @@ export async function adicionarEventosCadastro(){
 
     event.preventDefault() 
 
-    console.log('submit')
+    const valorData = inputData.value
+
+    const dataComHifens = valorData;
+    const partes = dataComHifens.split("-");
+    const dataComBarras = partes.reverse().join("/");
+
+    const dataComBarras2 = converterDataFormato(dataComBarras)
   
+    const vmes = funcoesHistorico.dataParaNomeDoMes(dataComBarras)
+    const vano = dataComBarras.slice(-4)
+
 
     mostrarElemento(objloading)
 
@@ -107,7 +116,9 @@ export async function adicionarEventosCadastro(){
       idUsuario : idUsuario ,
       nome: inputNome.value ,
       valor: parseFloat(inputValor.value) ,
-      data: inputData.value ,
+      data: dataComBarras2 ,
+      mes : vmes,
+      ano:vano,
       tipo: inputTipo.value ,
       observacao: inputObservacao.value 
       
@@ -173,7 +184,19 @@ export async function adicionarEventosCadastro(){
 
 
 
-
+function converterDataFormato(data) {
+  const partes = data.split('/');
+  if (partes.length === 3) {
+    const dia = partes[0];
+    const mes = partes[1];
+    const ano = partes[2];
+    const dataConvertida = `${ano}/${mes}/${dia}`;
+    return dataConvertida;
+  } else {
+    console.error('Formato de data inválido. Use "dd/mm/yyyy".');
+    return null;
+  }
+}
 
 
   

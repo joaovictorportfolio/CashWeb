@@ -167,8 +167,12 @@ class section01 extends HTMLElement {
 
     Galeria vazia
 
+    <p id="atualizar" class="text-xs text-neutral underline cursor-pointer hover:no-underline mt-2">Clique aqui para atualizar</p>
+
+
   </div>
 
+  
   <!-- Codigo -->
           
   

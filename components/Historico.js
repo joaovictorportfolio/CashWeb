@@ -337,18 +337,12 @@ class containerpai extends HTMLElement {
 
        <div class="flex items-center justify-center gap-2 mt-2">
        
-         <select class="select select-bordered select-xs w-full max-w-xs">
-           <option disabled selected value="">Mês</option>
-           <option>Janeiro</option>
-           <option>Fevereiro</option>
-           <option>Março</option>
+         <select id="selectMes" class="select select-bordered select-xs w-full max-w-xs">
+         
          </select>
 
-         <select class="select select-bordered select-xs w-full max-w-xs">
-           <option disabled selected value="">Ano</option>
-           <option>2022</option>
-           <option>2023</option>
-           <option>2024</option>
+         <select id="selectAno" class="select select-bordered select-xs w-full max-w-xs">
+          
          </select>
 
        </div>
@@ -360,7 +354,7 @@ class containerpai extends HTMLElement {
 
        <label class="text-xs font-semibold opacity-60">Tipo</label>
        
-         <div class="tabs tabs-boxed mt-2 flex items-center justify-between ">
+         <div id="tipoFiltro" class="tabs tabs-boxed mt-2 flex items-center justify-between ">
            <a class="tab tab-active">Todas</a> 
            <a class="tab">Receita</a> 
            <a class="tab">Despesa</a>
@@ -369,6 +363,14 @@ class containerpai extends HTMLElement {
      </div>
 
    </div>
+
+   <!-- container btn filtrar -->
+
+    <div class="w-full flex items-center justify-center mt-10 mb-4">
+
+      <button id="btnFiltro" class="btn btn-primary btn-wide">Filtrar</button>
+
+    </div>
 
  </div>
 
@@ -382,6 +384,23 @@ class containerpai extends HTMLElement {
 
 
       // Metodos
+
+      const tipoFiltro = this.querySelector('#tipoFiltro')
+
+      const tabs = tipoFiltro.querySelectorAll('a')
+
+      tabs.forEach((tab)=>{
+
+        tab.addEventListener('click',()=>{
+
+          tabs.forEach((tab2)=>{ tab2.classList.remove('tab-active') })
+
+          tab.classList.add("tab-active")
+
+        })
+
+
+      })
 
     
 
@@ -475,7 +494,7 @@ class containerpai extends HTMLElement {
 
   <!-- Card -->
 
-  <div class=" lg:min-w-[780px] card bg-base-100 shadow-xl border cardGaleria w-full hover:scale-105 ">
+  <div class=" lg:min-w-[780px] card bg-base-100 hover:drop-shadow-xl border cardGaleria w-full hover:scale-105 ">
 
 
     <div class="card-body space-y-2 w-full ">

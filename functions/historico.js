@@ -39,6 +39,11 @@ import * as funcoesNavegacaoAbas from './navegacaoAbas.js'
 import * as funcoesFirebase from './firebase.js'
 
 
+// =================================== VARIAVEIS =============================================== //
+
+
+let vquery 
+
 
 // =================================== FUNCOES =============================================== //
 
@@ -122,7 +127,7 @@ export function getRandomValueFromArray(array) {
 // ----------------------------------------------------------------------------
 
 
-export async function retornarDocumentosGaleria(vquery){
+export async function retornarDocumentosGaleria(){
 
   const carregandoGaleria = document.getElementById('carregandoGaleria')
 
@@ -189,7 +194,7 @@ export async function retornarDocumentosGaleria(vquery){
    
     const id = doc.id
     const nome = dados.nome
-    const data = dados.data
+    const data = converterData(dados.data)
     const tipo = dados.tipo
     const valor = dados.valor
     const observacao = dados.observacao
@@ -256,9 +261,9 @@ export async function retornarTodosDocumentos(){
 
   const col = collection(db, 'transacoes')
 
-  const q = query(col, where("idUsuario", "==", idUsuario), orderBy("data", "desc"));
+  vquery = query(col, where("idUsuario", "==", idUsuario), orderBy("data", "desc"))
 
-  retornarDocumentosGaleria(q)
+  retornarDocumentosGaleria()
 
 
 }
@@ -400,13 +405,13 @@ export async function adicionarEventos(){
       const totalItensGaleria = localStorage.getItem("totalItensGaleria")
     
 
-      if( totalItensColecao <=5 || totalItensGaleria == totalItensColecao  ){return}
+      //if( totalItensColecao <=5 || totalItensGaleria == totalItensColecao  ){return}
     
-        retornarTodosDocumentos()
+      retornarDocumentosGaleria()
       
     });
 
-  inputPesquisar.addEventListener('focus',()=>{ listaInputPesquisa.classList.remove("hidden") })
+  inputPesquisar.addEventListener('click',()=>{ listaInputPesquisa.classList.remove("hidden") })
 
   document.addEventListener('click', (event) => {
     if (!inputPesquisar.contains(event.target) && !listaInputPesquisa.contains(event.target)) {
@@ -448,19 +453,37 @@ function pesquisarInputGaleria(){
 
   const col = collection(db, 'transacoes')
 
-  const q = 
+  vquery = 
   query(
     col, where("idUsuario", "==", idUsuario), 
     where('nome', '==', valorcampoPesquisa )
     );
 
-  retornarDocumentosGaleria(q)
+    limparGaleria()
+
+  retornarDocumentosGaleria()
 
 
 }
 
 
+function converterData(dataNoFormatoISO) {
+  const partesData = dataNoFormatoISO.split('/'); // Divide a data em partes
 
+  if (partesData.length !== 3) {
+    // Certifique-se de que a data esteja no formato adequado
+    return 'Data inválida';
+  }
+
+  const ano = partesData[0];
+  const mes = partesData[1];
+  const dia = partesData[2];
+
+  // Crie a data no formato desejado (dd/mm/yyyy)
+  const dataFormatada = `${dia}/${mes}/${ano}`;
+
+  return dataFormatada;
+}
 
 
   

@@ -372,7 +372,14 @@ export async function filtrarListaPesquisa(){
   campoPesquisa.addEventListener('keyup', () => {
 
     
-    if(campoPesquisa.value==''){limparGaleria() ; retornarTodosDocumentos()} 
+    if(campoPesquisa.value==''){
+      
+      limparGaleria() ; 
+      retornarTodosDocumentos() ; 
+
+      listaInputPesquisa.classList.add("hidden")
+    }
+    else{ listaInputPesquisa.classList.remove("hidden") } 
   
   })
 
@@ -411,7 +418,7 @@ export async function adicionarEventos(){
       
     });
 
-  inputPesquisar.addEventListener('click',()=>{ listaInputPesquisa.classList.remove("hidden") })
+  //inputPesquisar.addEventListener('click',()=>{ listaInputPesquisa.classList.remove("hidden") })
 
   document.addEventListener('click', (event) => {
     if (!inputPesquisar.contains(event.target) && !listaInputPesquisa.contains(event.target)) {
@@ -486,8 +493,6 @@ function converterData(dataNoFormatoISO) {
 }
 
 
-  
-  
-  
+
   
   

@@ -17,6 +17,12 @@
 
 .textoSuccess{@apply text-teal-400 !important}
 
+.itensListaPesquisa{@apply py-2 px-2 text-sm hover:text-base-100 hover:bg-primary rounded-b-md w-full cursor-pointer !important}
+
+.cardsGaleria{@apply lg:min-w-[800px] md:min-w-[600px] !important}
+
+
+
 
 /* Geral */
 

@@ -52,6 +52,8 @@ class alert01 extends HTMLElement {
   
   customElements.define("alert-01", alert01);
 
+  
+
   // ------------------------------------------------------
 
   

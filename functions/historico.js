@@ -43,6 +43,22 @@ import * as funcoesFirebase from './firebase.js'
 // =================================== FUNCOES =============================================== //
 
 
+export async function iniciarSecaoHistorico(){
+
+
+   retornarListaInputPesquisa()
+
+
+  limparGaleria()
+
+  retornarTodosDocumentos()
+
+  document.getElementById('inputPesquisar').value = ''
+
+
+}
+
+
 export function inserirDadosAleatoriosTransacoes(totalTransacoes){
 
   const idUsuario = localStorage.getItem('idUsuario')
@@ -76,6 +92,8 @@ export function inserirDadosAleatoriosTransacoes(totalTransacoes){
 
 }
 
+// ----------------------------------------------------------------------------
+
 
 export function generateRandomDate(peridoAno) {
   const currentYear = new Date().getFullYear();
@@ -89,6 +107,8 @@ export function generateRandomDate(peridoAno) {
   return `${year}/${month}/${day}`;
 }
 
+// ----------------------------------------------------------------------------
+
 
 export function getRandomValueFromArray(array) {
   if (Array.isArray(array) && array.length > 0) {
@@ -100,7 +120,10 @@ export function getRandomValueFromArray(array) {
 }
 
 
-export async function retornarDocumentosGaleria(){
+// ----------------------------------------------------------------------------
+
+
+export async function retornarDocumentosGaleria(vquery){
 
   const carregandoGaleria = document.getElementById('carregandoGaleria')
 
@@ -120,17 +143,13 @@ export async function retornarDocumentosGaleria(){
 
   const totalCardsApresentar = totalCardsGaleria+nlimite
 
-  const idUsuario = localStorage.getItem('idUsuario')
-
   const galeriaTransacoes = document.getElementById('galeriaTransacoes')
 
-  const col = collection(db, 'transacoes')
-
-  const q2 = query(col, where("idUsuario", "==", idUsuario));
+  const q2 = vquery;
 
   const querySnapshot2 = await getDocs(q2);
 
-  const q = query(col, where("idUsuario", "==", idUsuario), orderBy("data", "desc"), limit(totalCardsApresentar));
+  const q = query(vquery, limit(totalCardsApresentar));
 
   const querySnapshot = await getDocs(q);
 
@@ -208,7 +227,7 @@ export async function retornarDocumentosGaleria(){
   };
 
   console.log('Dados retornados!')
-  console.log('Total: '+totalDocumentos)
+  console.log('Apresentados: '+totalDocumentos)
   console.log('Total: '+totalDocumentos2)
 
   carregandoGaleria.classList.add('hidden')
@@ -217,6 +236,8 @@ export async function retornarDocumentosGaleria(){
 
 
 } 
+
+// ----------------------------------------------------------------------------
 
 export function limparGaleria() {
 
@@ -227,13 +248,216 @@ export function limparGaleria() {
   }
 }
 
+// ----------------------------------------------------------------------------
 
 
+export async function retornarTodosDocumentos(){
+
+  const idUsuario = localStorage.getItem('idUsuario')
+
+  const col = collection(db, 'transacoes')
+
+  const q = query(col, where("idUsuario", "==", idUsuario), orderBy("data", "desc"));
+
+  retornarDocumentosGaleria(q)
 
 
+}
 
 
+// ----------------------------------------------------------------------------
+
+
+export async function retornarListaInputPesquisa(){
+
+  const listaInputPesquisa = document.getElementById("listaInputPesquisa")
+
+  const inputPesquisar = document.getElementById("inputPesquisar")
+
+  const idUsuario = localStorage.getItem('idUsuario')
+
+  const col = collection(db, 'transacoes')
+
+  const q = query(col, where("idUsuario", "==", idUsuario));
+
+  const querySnapshot = await getDocs(q);
+
+  const listaItens = []
+
+  limparObjetoPai(listaInputPesquisa)
+
+  for (const doc of querySnapshot.docs) {
+
+    const dados = doc.data()
+   
+    const nome = dados.nome
+
+    if (!listaItens.includes(nome)) {
+
+      listaItens.push(nome)
+
+      const novoElemnto = document.createElement('div')
+
+      novoElemnto.classList.add('itensListaPesquisa' )
   
+      novoElemnto.innerHTML = `
+  
+      <li class="py-2 px-2 text-sm hover:text-base-100 hover:bg-primary rounded-b-md w-full cursor-pointer">${nome}</li>
+      
+      `
+      
+  
+      listaInputPesquisa.appendChild(novoElemnto)
+
+
+
+    }
+
+   
+
+    
+  };
+
+ 
+  const itensLista = listaInputPesquisa.querySelectorAll('li')
+
+  itensLista.forEach((item)=>{ item.addEventListener('click',()=>{ 
+
+    inputPesquisar.value = item.textContent
+
+    listaInputPesquisa.classList.add("hidden")
+
+   }) })
+
+   
+
+}
+
+// ----------------------------------------------------------------------------
+
+
+export async function filtrarListaPesquisa(){
+
+  const campoPesquisa = document.getElementById('inputPesquisar');
+
+  const listaOpcoes = document.getElementById('listaInputPesquisa');
+
+  campoPesquisa.addEventListener('input', () => {
+
+    const opcoes = listaOpcoes.querySelectorAll('li');
+
+    const termoPesquisa = campoPesquisa.value.toLowerCase();
+
+    opcoes.forEach((opcao) => {
+
+      const textoOpcao = opcao.textContent.toLowerCase();
+
+      if (textoOpcao.startsWith(termoPesquisa)) {
+
+        opcao.style.display = 'block'; // Mostra a opção se a pesquisa corresponder
+
+      } else {
+
+        opcao.style.display = 'none'; // Oculta a opção se a pesquisa não corresponder
+
+      }
+
+    });
+
+  });
+
+
+
+}
+
+// ----------------------------------------------------------------------------
+
+
+export async function adicionarEventos(){
+
+  const listaInputPesquisa = document.getElementById("listaInputPesquisa")
+
+  const inputPesquisar = document.getElementById("inputPesquisar")
+
+  const spinnerLoadingGaleria = document.getElementById("spinnerLoadingGaleria")
+
+  const btnPesquisarNome = document.getElementById("btnPesquisarNome")
+
+
+
+  btnPesquisarNome.addEventListener('click',()=>{ pesquisarInputGaleria() })
+
+  spinnerLoadingGaleria.addEventListener('click', async function() {
+
+
+      const totalItensColecao = localStorage.getItem("totalItensColecao")
+
+      const totalItensGaleria = localStorage.getItem("totalItensGaleria")
+    
+
+      if( totalItensColecao <=5 || totalItensGaleria == totalItensColecao  ){return}
+    
+        retornarTodosDocumentos()
+      
+    });
+
+  inputPesquisar.addEventListener('focus',()=>{ listaInputPesquisa.classList.remove("hidden") })
+
+  document.addEventListener('click', (event) => {
+    if (!inputPesquisar.contains(event.target) && !listaInputPesquisa.contains(event.target)) {
+      listaInputPesquisa.classList.add('hidden');
+    }
+  });
+
+  filtrarListaPesquisa()
+
+
+}
+
+
+// ----------------------------------------------------------------------------
+
+
+function limparObjetoPai(container) {
+
+  //const container = document.getElementById('galeriaTransacoes')
+
+  while (container.firstChild) {
+    container.removeChild(container.firstChild);
+  }
+}
+
+
+// ----------------------------------------------------------------------------
+
+
+function pesquisarInputGaleria(){
+
+  const campoPesquisa = document.getElementById('inputPesquisar');
+
+  const valorcampoPesquisa = campoPesquisa.value.trim()
+
+  if ( valorcampoPesquisa == '' ){ return }
+
+  const idUsuario = localStorage.getItem('idUsuario')
+
+  const col = collection(db, 'transacoes')
+
+  const q = 
+  query(
+    col, where("idUsuario", "==", idUsuario), 
+    where('nome', '==', valorcampoPesquisa )
+    );
+
+  retornarDocumentosGaleria(q)
+
+
+}
+
+
+
+
+
   
   
   

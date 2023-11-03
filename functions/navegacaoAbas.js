@@ -43,9 +43,7 @@ export async function alterarAba(nomeAba){
       
       });
 
-       funcoesHistorico.limparGaleria()
-
-      funcoesHistorico.retornarDocumentosGaleria()
+      funcoesHistorico.iniciarSecaoHistorico()
       
       break;
 
@@ -197,7 +195,24 @@ alterarAba(nometab)
 
  }
 
+
+ export async function paginaLocalStorage(){
+
+  const paginaAtual =  localStorage.getItem('paginaAtual')
+
+
+  if( paginaAtual == null ){ 
   
+      
+      localStorage.setItem('paginaAtual','Histórico') ; 
+      
+      ativarTab('Histórico')
+  
+  }
+  else{  ativarTab(paginaAtual) ;  }
+
+
+ }
   
   
   

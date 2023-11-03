@@ -175,13 +175,13 @@ class containerpai extends HTMLElement {
   <div class="w-full relative">
 
 
-     <input type="text" placeholder="Pesquisar" class="input input-bordered input-md w-full peer" />
+     <input id="inputPesquisar" type="text" placeholder="Pesquisar" class="input input-bordered input-md w-full " />
 
 
-    <ul class="absolute bg-base-100 w-full z-10 hidden peer-focus:block">
-      <li class="py-2 px-2 text-sm hover:text-base-100 hover:bg-primary rounded-b-md w-full cursor-pointer">Opcao 1</li>
-      <li class="py-2 px-2 text-sm hover:text-base-100 hover:bg-primary rounded-b-md w-full cursor-pointer">Opcao 1</li>
-      <li class="py-2 px-2 text-sm hover:text-base-100 hover:bg-primary rounded-b-md w-full cursor-pointer">Opcao 1</li>
+    <ul id="listaInputPesquisa" class="absolute bg-base-100 w-full z-10 hidden border rounded-b-md">
+
+      
+     
     </ul>
 
   </div>
@@ -224,7 +224,7 @@ class containerpai extends HTMLElement {
 
 
   <!-- btn Pesquisa -->
-  <button class="btn btn-square hover:btn-primary hover:text-white">
+  <button id="btnPesquisarNome" class="btn btn-square hover:btn-primary hover:text-white">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
     <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
     </svg>
@@ -411,7 +411,7 @@ class containerpai extends HTMLElement {
     
   <!-- Codigo -->
 
-  <div id="galeriaTransacoes" class=" flex flex-col gap-6">
+  <div id="galeriaTransacoes" class=" flex flex-col gap-6 ">
 
       
       
@@ -475,18 +475,18 @@ class containerpai extends HTMLElement {
 
   <!-- Card -->
 
-  <div class="card bg-base-100 shadow-xl border cardGaleria w-full hover:scale-105">
+  <div class="card bg-base-100 shadow-xl border cardGaleria w-full hover:scale-105 cardsGaleria">
 
 
-    <div class="card-body space-y-2 w-full">
+    <div class="card-body space-y-2 w-full ">
 
       <div class=" absolute right-3 top-3"><span class="badge ${corTipo2} text-white lg:text-base text-xs">${tipo}</span></div>
         
-        <h2 class="card-title lg:text-lg text-base">${nome}</h2>
+        <h2 class="card-title lg:text-lg text-base w-full">${nome}</h2>
 
           <div>
             <label class="text-xs font-semibold opacity-60">Data</label>
-            <p class="font-medium opacity-80 lg:text-base text-sm">${data}</p>
+            <p class="font-medium opacity-80 lg:text-base text-sm w-full">${data}</p>
           </div>
 
 

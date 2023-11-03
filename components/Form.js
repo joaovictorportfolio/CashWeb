@@ -161,6 +161,8 @@ class formcadastro extends HTMLElement {
   
   customElements.define("form-cadastro", formcadastro);
 
+  
+
   // ------------------------------------------------------
 
   

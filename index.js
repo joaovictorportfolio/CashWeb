@@ -58,41 +58,14 @@ funcoesdadosLocais.mostrarDadosLocais()
 
 // -- Navegacao aba -- //
 
-const paginaAtual =  localStorage.getItem('paginaAtual')
-
-
-if( paginaAtual == null ){ 
-
-    
-    localStorage.setItem('paginaAtual','Histórico') ; 
-    
-    funcoesNavegacaoAbas.ativarTab('Histórico')
-
-}
-else{  funcoesNavegacaoAbas.ativarTab(paginaAtual) ;  }
-
+funcoesNavegacaoAbas.paginaLocalStorage()
 
 funcoesNavegacaoAbas.eventosTabNavegacao()
 
-// -- scroll historico -- //
 
-const spinnerLoadingGaleria = document.getElementById("spinnerLoadingGaleria")
+// -- adicionar eventos historico -- //
 
-// Exemplo de como usar a função
-spinnerLoadingGaleria.addEventListener('click', async function() {
-
-
-    const totalItensColecao = localStorage.getItem("totalItensColecao")
-
-    const totalItensGaleria = localStorage.getItem("totalItensGaleria")
-  
-
-    if( totalItensColecao <=5 || totalItensGaleria == totalItensColecao  ){return}
-  
-       funcoesHistorico.retornarDocumentosGaleria()
-    
-  });
-
+funcoesHistorico.adicionarEventos()
 
 
 //funcoesHistorico.inserirDadosAleatoriosTransacoes(1)

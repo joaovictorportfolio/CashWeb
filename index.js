@@ -25,6 +25,7 @@ import * as funcoesNavegacaoAbas from './functions/navegacaoAbas.js'
 import * as funcoesGerarID from './functions/gerarID.js'
 import * as funcoesdadosLocais from './functions/localstorage.js'
 import * as funcoesHistorico from './functions/historico.js'
+import * as funcoesCadastro from './functions/cadastro.js'
 
 
 
@@ -61,6 +62,10 @@ funcoesdadosLocais.mostrarDadosLocais()
 funcoesNavegacaoAbas.paginaLocalStorage()
 
 funcoesNavegacaoAbas.eventosTabNavegacao()
+
+// -- adicionar eventos cadastro -- //
+
+funcoesCadastro.adicionarEventosCadastro()
 
 
 // -- adicionar eventos historico -- //

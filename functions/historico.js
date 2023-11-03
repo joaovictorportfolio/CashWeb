@@ -176,7 +176,7 @@ export async function retornarDocumentosGaleria(){
 
     return
 
-  }
+  }else{  galeriaVazia.classList.remove('flex') ; galeriaVazia.classList.add('hidden') }
 
   if( totalDocumentos2 <= 5 || totalDocumentos2 ==totalDocumentos ){
 

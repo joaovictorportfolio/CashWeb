@@ -475,7 +475,7 @@ class containerpai extends HTMLElement {
 
   <!-- Card -->
 
-  <div class="card bg-base-100 shadow-xl border cardGaleria w-full hover:scale-105 cardsGaleria">
+  <div class=" lg:min-w-[780px] card bg-base-100 shadow-xl border cardGaleria w-full hover:scale-105 ">
 
 
     <div class="card-body space-y-2 w-full ">

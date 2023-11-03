@@ -3029,18 +3029,6 @@ html {
   color: hsl(var(--b1) / var(--tw-text-opacity)) !important;
 }
 
-@media (min-width: 768px) {
-  .cardsGaleria {
-    min-width: 600px !important;
-  }
-}
-
-@media (min-width: 1024px) {
-  .cardsGaleria {
-    min-width: 800px !important;
-  }
-}
-
 /* Geral */
 
 *{
@@ -3308,6 +3296,10 @@ body,html{
 
   .lg\:h-screen {
     height: 100vh;
+  }
+
+  .lg\:min-w-\[780px\] {
+    min-width: 780px;
   }
 
   .lg\:max-w-\[55\%\] {

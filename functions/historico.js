@@ -46,8 +46,7 @@ import * as funcoesFirebase from './firebase.js'
 export async function iniciarSecaoHistorico(){
 
 
-   retornarListaInputPesquisa()
-
+  retornarListaInputPesquisa()
 
   limparGaleria()
 
@@ -298,11 +297,10 @@ export async function retornarListaInputPesquisa(){
 
       const novoElemnto = document.createElement('div')
 
-      novoElemnto.classList.add('itensListaPesquisa' )
   
       novoElemnto.innerHTML = `
   
-      <li class="py-2 px-2 text-sm hover:text-base-100 hover:bg-primary rounded-b-md w-full cursor-pointer">${nome}</li>
+      <li class="itensListaPesquisa">${nome}</li>
       
       `
       
@@ -365,6 +363,13 @@ export async function filtrarListaPesquisa(){
     });
 
   });
+
+  campoPesquisa.addEventListener('keyup', () => {
+
+    
+    if(campoPesquisa.value==''){limparGaleria() ; retornarTodosDocumentos()} 
+  
+  })
 
 
 

@@ -102,11 +102,19 @@ export function getRandomValueFromArray(array) {
 
 export async function retornarDocumentosGaleria(){
 
+  const carregandoGaleria = document.getElementById('carregandoGaleria')
+
+  const spinnerLoadingGaleria = document.getElementById('spinnerLoadingGaleria')
+
+  spinnerLoadingGaleria.classList.remove('hidden')
+  spinnerLoadingGaleria.classList.add('flex')
+
+  carregandoGaleria.classList.remove('hidden')
+  carregandoGaleria.classList.add('flex')
+
   const galeriaVazia = document.getElementById('galeriaVazia')
 
   const totalCardsGaleria = document.querySelectorAll('.cardGaleria').length
-
-
 
   const nlimite = 5
 
@@ -130,6 +138,9 @@ export async function retornarDocumentosGaleria(){
 
   const totalDocumentos2 = querySnapshot2.size
 
+  localStorage.setItem("totalItensColecao",totalDocumentos2)
+  localStorage.setItem("totalItensGaleria",totalDocumentos)
+
   if( totalDocumentos == 0 ){
 
     limparGaleria()
@@ -137,7 +148,17 @@ export async function retornarDocumentosGaleria(){
     galeriaVazia.classList.add('flex')
     galeriaVazia.classList.remove('hidden')
 
+    carregandoGaleria.classList.add('hidden')
+    carregandoGaleria.classList.remove('flex')
+
     return
+
+  }
+
+  if( totalDocumentos2 <= 5 || totalDocumentos2 ==totalDocumentos ){
+
+    spinnerLoadingGaleria.classList.add('hidden')
+    spinnerLoadingGaleria.classList.remove('flex')
 
   }
 
@@ -190,11 +211,14 @@ export async function retornarDocumentosGaleria(){
   console.log('Total: '+totalDocumentos)
   console.log('Total: '+totalDocumentos2)
 
+  carregandoGaleria.classList.add('hidden')
+  carregandoGaleria.classList.remove('flex')
+
 
 
 } 
 
-function limparGaleria() {
+export function limparGaleria() {
 
   const container = document.getElementById('galeriaTransacoes')
 
@@ -202,6 +226,7 @@ function limparGaleria() {
     container.removeChild(container.firstChild);
   }
 }
+
 
 
 

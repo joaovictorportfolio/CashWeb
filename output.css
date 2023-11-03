@@ -1376,33 +1376,6 @@ html {
   --alert-bg-mix: hsl(var(--b1));
 }
 
-.badge-accent {
-  --tw-border-opacity: 1;
-  border-color: hsl(var(--a) / var(--tw-border-opacity));
-  --tw-bg-opacity: 1;
-  background-color: hsl(var(--a) / var(--tw-bg-opacity));
-  --tw-text-opacity: 1;
-  color: hsl(var(--ac) / var(--tw-text-opacity));
-}
-
-.badge-error {
-  border-color: transparent;
-  --tw-bg-opacity: 1;
-  background-color: hsl(var(--er) / var(--tw-bg-opacity));
-  --tw-text-opacity: 1;
-  color: hsl(var(--erc) / var(--tw-text-opacity));
-}
-
-.badge-outline.badge-accent {
-  --tw-text-opacity: 1;
-  color: hsl(var(--a) / var(--tw-text-opacity));
-}
-
-.badge-outline.badge-error {
-  --tw-text-opacity: 1;
-  color: hsl(var(--er) / var(--tw-text-opacity));
-}
-
 .btm-nav > *:not(.active) {
   padding-top: 0.125rem;
 }
@@ -2632,13 +2605,21 @@ html {
   z-index: 20;
 }
 
+.z-\[1\] {
+  z-index: 1;
+}
+
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
 }
 
-.mb-32 {
-  margin-bottom: 8rem;
+.mb-0 {
+  margin-bottom: 0px;
+}
+
+.mb-28 {
+  margin-bottom: 7rem;
 }
 
 .mb-4 {
@@ -2963,9 +2944,9 @@ html {
   color: hsl(var(--p) / var(--tw-text-opacity));
 }
 
-.text-success {
+.text-white {
   --tw-text-opacity: 1;
-  color: hsl(var(--su) / var(--tw-text-opacity));
+  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 .opacity-60 {
@@ -3018,12 +2999,32 @@ html {
   color: hsl(var(--p) / var(--tw-text-opacity)) !important;
 }
 
+.fundoError {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(251 113 133 / var(--tw-bg-opacity)) !important;
+}
+
+.fundoSuccess {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(45 212 191 / var(--tw-bg-opacity)) !important;
+}
+
+.textoError {
+  --tw-text-opacity: 1 !important;
+  color: rgb(251 113 133 / var(--tw-text-opacity)) !important;
+}
+
+.textoSuccess {
+  --tw-text-opacity: 1 !important;
+  color: rgb(45 212 191 / var(--tw-text-opacity)) !important;
+}
+
 /* Geral */
 
 *{
   margin: 0;
   padding: 0;
-  transition: all 0.2s linear;
+  transition: all 0.1s linear;
 }
 
 /* Tirar rolagem horizontal */

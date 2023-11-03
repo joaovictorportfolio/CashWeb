@@ -9,13 +9,21 @@
 
 .tab-active{@apply bg-transparent text-primary font-semibold !important}
 
+.fundoError{@apply bg-rose-400 !important}
+
+.fundoSuccess{@apply bg-teal-400 !important}
+
+.textoError{@apply text-rose-400 !important}
+
+.textoSuccess{@apply text-teal-400 !important}
+
 
 /* Geral */
 
 *{  
     margin: 0;
     padding: 0;
-    transition: all 0.2s linear;
+    transition: all 0.1s linear;
 }
 
 

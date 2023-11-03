@@ -74,13 +74,33 @@ else{  funcoesNavegacaoAbas.ativarTab(paginaAtual) ;  }
 
 funcoesNavegacaoAbas.eventosTabNavegacao()
 
+// -- scroll historico -- //
+
+const spinnerLoadingGaleria = document.getElementById("spinnerLoadingGaleria")
+
+// Exemplo de como usar a função
+spinnerLoadingGaleria.addEventListener('click', async function() {
 
 
-//funcoesHistorico.inserirDadosAleatoriosTransacoes(10)
+    const totalItensColecao = localStorage.getItem("totalItensColecao")
+
+    const totalItensGaleria = localStorage.getItem("totalItensGaleria")
+  
+
+    if( totalItensColecao <=5 || totalItensGaleria == totalItensColecao  ){return}
+  
+       funcoesHistorico.retornarDocumentosGaleria()
+    
+  });
+
+
+
+//funcoesHistorico.inserirDadosAleatoriosTransacoes(1)
 
 
 
 
+  
   
 
   

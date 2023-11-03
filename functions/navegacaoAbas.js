@@ -7,7 +7,7 @@ import * as funcoesHistorico from './historico.js'
 // =================================== FUNCOES =============================================== //
 
 
-export function alterarAba(nomeAba){
+export async function alterarAba(nomeAba){
 
   //console.log('alterarAba: '+nomeAba)
 
@@ -42,6 +42,8 @@ export function alterarAba(nomeAba){
         } 
       
       });
+
+       funcoesHistorico.limparGaleria()
 
       funcoesHistorico.retornarDocumentosGaleria()
       

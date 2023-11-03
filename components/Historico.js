@@ -20,11 +20,13 @@ class containerpai extends HTMLElement {
   <!-- Codigo -->
 
    
-  <div class="flex flex-col max-w-4xl w-full max-lg:mt-14 px-4 gap-10 mb-32">
+  <div class="flex flex-col max-w-4xl w-full max-lg:mt-14 px-4 gap-10 mb-28">
 
       <container-pesquisa></container-pesquisa>
 
       <container-galeria></container-galeria>
+
+      <span id="spinnerLoadingGaleria" class="text-primary mx-auto mb-0 cursor-pointer hover:scale-105">Clique aqui para ver mais</span>
 
 
   </div>
@@ -456,8 +458,12 @@ class containerpai extends HTMLElement {
       const observacao = this.getAttribute('observacao') || 'Sem observação'
 
       let corTipo2
+      let textoTipo2
 
-      if( corTipo == 'accent' ){ corTipo2 = 'success' }else{ corTipo2 = 'error' }
+      if( corTipo == 'accent' ){ corTipo2 = 'fundoSuccess' }else{ corTipo2 = 'fundoError' }
+
+      if( corTipo == 'accent' ){ textoTipo2 = 'textoSuccess' }else{ textoTipo2 = 'textoError' }
+
 
       // -----------------------------------
 
@@ -469,12 +475,12 @@ class containerpai extends HTMLElement {
 
   <!-- Card -->
 
-  <div class="card bg-base-100 shadow-xl border cardGaleria w-full">
+  <div class="card bg-base-100 shadow-xl border cardGaleria w-full hover:scale-105">
 
 
     <div class="card-body space-y-2 w-full">
 
-      <div class=" absolute right-3 top-3"><span class="badge badge-${corTipo} lg:text-base text-xs">${tipo}</span></div>
+      <div class=" absolute right-3 top-3"><span class="badge ${corTipo2} text-white lg:text-base text-xs">${tipo}</span></div>
         
         <h2 class="card-title lg:text-lg text-base">${nome}</h2>
 
@@ -500,7 +506,7 @@ class containerpai extends HTMLElement {
 
            <div>
             <label class="text-xs font-semibold opacity-60">Valor</label>
-            <p class="font-medium text-${corTipo2} lg:text-base text-base">R$ ${valor}</font></p>
+            <p class="font-medium ${textoTipo2} lg:text-base text-base">R$ ${valor}</font></p>
           </div>
 
           <div class="card-actions justify-end flex gap-6 pt-2">

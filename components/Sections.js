@@ -21,6 +21,8 @@ class section01 extends HTMLElement {
 
   <section id="section01" class="lg:h-screen pt-10 lg:pt-24  bg-base-100 flex items-start justify-center animate__animated animate__fadeIn animate__slow relative">
 
+      <alert-01></alert-01>
+
        <container-pai class="animate__animated animate__fadeInRight"></container-pai>
 
        <galeria-vazia></galeria-vazia>
@@ -117,7 +119,7 @@ class section01 extends HTMLElement {
 
     <section id="section03" class="h-screen hidden items-center justify-center bg-red-400 animate__animated animate__fadeIn animate__slow">
     
-    
+      
     
     
     
@@ -167,7 +169,7 @@ class section01 extends HTMLElement {
 
     Galeria vazia
 
-    <p id="atualizar" class="text-xs text-neutral underline cursor-pointer hover:no-underline mt-2">Clique aqui para atualizar</p>
+    <p id="atualizar" class="text-xs text-neutral underline cursor-pointer hover:no-underline mt-2 hidden">Clique aqui para atualizar</p>
 
 
   </div>

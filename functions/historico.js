@@ -10,7 +10,9 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebas
      where, 
      getDocs,
      limit,
-     orderBy
+     orderBy,
+     deleteDoc ,
+     doc
   
   
   } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js";
@@ -140,6 +142,8 @@ export async function retornarDocumentosGaleria(){
 
   const carregandoGaleria = document.getElementById('carregandoGaleria')
 
+  const atualizar = document.getElementById('atualizar')
+
   const spinnerLoadingGaleria = document.getElementById('spinnerLoadingGaleria')
 
   spinnerLoadingGaleria.classList.remove('hidden')
@@ -189,10 +193,14 @@ export async function retornarDocumentosGaleria(){
 
   if( totalDocumentos2 <= 5 || totalDocumentos2 ==totalDocumentos ){
 
+    //console.log('esconder')
+
     spinnerLoadingGaleria.classList.add('hidden')
     spinnerLoadingGaleria.classList.remove('flex')
 
   }
+
+  if ( totalDocumentos2 == 0 ){ atualizar.classList.add("hidden") }else{atualizar.classList.remove("hidden")}
 
   await limparGaleria()
 
@@ -232,6 +240,10 @@ export async function retornarDocumentosGaleria(){
     ></card-galeria>
     
     `
+    const excluirTransacao = novoElemnto.querySelector('.excluirTransacao')
+
+    excluirTransacao.addEventListener('click',()=>{ deletarTransacao(id,nome) })
+
 
 
     galeriaTransacoes.appendChild(novoElemnto)
@@ -504,10 +516,6 @@ function converterData(dataNoFormatoISO) {
 // ----------------------------------------------------------------------------
 
 
-
-// ----------------------------------------------------------------------------
-
-
 export async function retornarListasFiltro(){
 
   const selectMes = document.getElementById("selectMes")
@@ -611,7 +619,11 @@ export async function retornarListasFiltro(){
 
 }
 
-  
+
+// ----------------------------------------------------------------------------
+
+
+
 export function dataParaNomeDoMes(dataString) {
   const meses = [
     "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
@@ -627,6 +639,11 @@ export function dataParaNomeDoMes(dataString) {
   }
  
 }
+
+
+// ----------------------------------------------------------------------------
+
+
 
 export function extrairAnoDaData(dataString) {
   const partes = dataString.split('/'||'-');
@@ -673,12 +690,12 @@ function filtrarGaleria(){
 
   //const tipoFiltro = document.getElementById("tipoFiltro")
 
-  console.log('selectMes: '+valorMes)
-  console.log('selectAno: '+valorAno)
+  //console.log('selectMes: '+valorMes)
+  //console.log('selectAno: '+valorAno)
   
   if( selectMes.value !== 'Mês' ){
 
-      console.log(valorMes)
+      //console.log(valorMes)
 
        vqueryMes = where('mes','==',valorMes)
 
@@ -689,7 +706,7 @@ function filtrarGaleria(){
 
   if( selectAno.value !== 'Ano' ){
 
-    console.log(valorAno)
+    //console.log(valorAno)
 
      vqueryAno = where('ano','==',valorAno.toString())
 
@@ -710,9 +727,74 @@ function filtrarGaleria(){
 
   vquery = query(col, where("idUsuario", "==", idUsuario),...filters )
 
+  limparGaleria()
+
   retornarDocumentosGaleria()
 
 
 }
 
 
+// ----------------------------------------------------------------------------
+
+
+async function deletarTransacao(idTransacao,nome){
+
+  const section01 = document.getElementById('section01')
+  const alert = section01.querySelector('.alert')
+  const mensagemAlerta = alert.querySelector('span')
+
+  try {
+
+     await deleteDoc(doc(db, "transacoes", idTransacao));
+
+     //console.log(`Transação ${nome} excluída com sucesso!`)
+
+      alert.classList.add('alert-success')
+
+      mensagemAlerta.textContent=`${nome} excluída com sucesso!`
+
+      alert.classList.add("flex")
+      alert.classList.remove("hidden")
+
+      window.scrollTo({
+        top: 0, // Define a posição para o topo da página
+        behavior: 'smooth', // Role suavemente (opcional)
+      });
+
+      retornarTodosDocumentos()
+
+      setTimeout(()=>{ 
+
+        
+
+        alert.classList.remove("flex")
+       alert.classList.add("hidden")
+  
+      
+      },3000)
+
+  
+    
+    
+  } catch (error) {
+
+    alert.classList.add('alert-error')
+      mensagemAlerta.textContent = 'Falha ao tentar cadastrar a transação, tente mais tarde...'
+      console.log(error)
+      alert.classList.add("flex")
+      alert.classList.remove("hidden")
+
+      setTimeout(()=>{ 
+
+        alert.classList.remove("flex")
+        alert.classList.add("hidden")
+      
+      
+      },3000)
+
+    
+  }
+
+
+}

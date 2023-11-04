@@ -368,7 +368,9 @@ class containerpai extends HTMLElement {
 
     <div class="w-full flex items-center justify-center mt-10 mb-4">
 
-      <button id="btnFiltro" class="btn btn-primary btn-wide">Filtrar</button>
+    <form method="dialog">
+      <button  id="btnFiltro" class="btn btn-primary btn-wide">Filtrar</button>
+    <form>
 
     </div>
 
@@ -513,7 +515,7 @@ class containerpai extends HTMLElement {
         
           <label class="text-xs font-semibold opacity-60">Observação</label>
 
-          <button class="text-start group">
+          <button class="text-start group block">
           <h3 class="lg:text-sm text-sm line-clamp-2 group-focus:line-clamp-none">
           ${observacao}
           </h3>
@@ -563,7 +565,9 @@ class containerpai extends HTMLElement {
                 <h2 class="card-title text-error ">Excluir Transação</h2>
                 <p class="text-sm w-full">Deseja realmente excluir essa transação?</p>
                 <div class="card-actions justify-end space-x-4">
-                  <button class="btn btn-error">Excluir</button>
+                <form method="dialog">
+                  <button class="btn btn-error excluirTransacao">Excluir</button>
+                </form>
                   <form method="dialog">
                     <button class="btn btn-ghost">Voltar</button>
                   </form>

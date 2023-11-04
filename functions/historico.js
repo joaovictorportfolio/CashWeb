@@ -12,6 +12,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebas
      limit,
      orderBy,
      deleteDoc ,
+     updateDoc ,
      doc
   
   
@@ -40,17 +41,28 @@ import * as funcoesNavegacaoAbas from './navegacaoAbas.js'
 
 import * as funcoesFirebase from './firebase.js'
 
+import * as funcoesCadastro from './cadastro.js'
+
 
 // =================================== VARIAVEIS =============================================== //
 
 
 let vquery 
 
+let objTransacaoSelecionada
+
+let IDobjTransacaoSelecionada
+
 
 // =================================== FUNCOES =============================================== //
 
 
 export async function iniciarSecaoHistorico(){
+
+  const modalEditTransacao = document.getElementById('modalEditTransacao')
+
+  modalEditTransacao.classList.add('hidden')
+  modalEditTransacao.classList.remove('flex')
 
 
   retornarListaInputPesquisa()
@@ -241,8 +253,49 @@ export async function retornarDocumentosGaleria(){
     
     `
     const excluirTransacao = novoElemnto.querySelector('.excluirTransacao')
+    const iconEditCard = novoElemnto.querySelector('.iconEditCard')
+    const modalEditTransacao = document.getElementById("modalEditTransacao")
+
+    const formEditTransacao = document.getElementById("formEditTransacao")
+
+    IDobjTransacaoSelecionada = id
+
+    objTransacaoSelecionada = {
+
+     nome : nome,
+     data : data,
+     tipo : tipo,
+     valor : valor,
+     observacao : observacao
+
+    }
+    
 
     excluirTransacao.addEventListener('click',()=>{ deletarTransacao(id,nome) })
+
+    iconEditCard.addEventListener('click',()=>{ 
+
+      modalEditTransacao.classList.remove('hidden')
+      modalEditTransacao.classList.add('flex')
+
+      const dataString = data; // Sua string de data no formato "yyyy/mm/dd"
+      const partesData = dataString.split("/");
+      const ano = partesData[0];
+      const mes = partesData[1];
+      const dia = partesData[2];
+
+      const dataFormatoBrasileiro = `${dia}/${mes}/${ano}`; // Formato brasileiro "mm/dd/yyyy"
+
+      //console.log(dataFormatoBrasileiro)
+
+
+      formEditTransacao.querySelector('#inputNomeEdit').value = nome
+      formEditTransacao.querySelector('#inputValorEdit').value = valor
+      formEditTransacao.querySelector('#inputDataEdit').value = new Date(dataFormatoBrasileiro).toISOString().slice(0, 10);
+      formEditTransacao.querySelector('#inputTipoEdit').value = tipo
+      formEditTransacao.querySelector('#inputObsEdit').value = observacao
+
+     })
 
 
 
@@ -424,6 +477,11 @@ export async function adicionarEventos(){
   const btnFiltro = document.getElementById("btnFiltro")
 
   const atualizar = document.getElementById('atualizar')
+
+  const formEditTransacao = document.getElementById('formEditTransacao')
+
+
+  formEditTransacao.addEventListener('submit',()=>{ event.preventDefault()  ; editarTransacao() })
 
   atualizar.addEventListener('click',()=>{ retornarTodosDocumentos() })
 
@@ -781,7 +839,7 @@ async function deletarTransacao(idTransacao,nome){
   } catch (error) {
 
     alert.classList.add('alert-error')
-      mensagemAlerta.textContent = 'Falha ao tentar cadastrar a transação, tente mais tarde...'
+      mensagemAlerta.textContent = 'Falha ao tentar excluir a transação, tente mais tarde...'
       console.log(error)
       alert.classList.add("flex")
       alert.classList.remove("hidden")
@@ -796,6 +854,119 @@ async function deletarTransacao(idTransacao,nome){
 
     
   }
+
+
+}
+
+
+// ----------------------------------------------------------------------------
+
+
+async function editarTransacao(){
+
+  //console.log(objTransacaoSelecionada)
+
+  
+
+  const modalEditTransacao = document.getElementById('modalEditTransacao')
+  const alert = modalEditTransacao.querySelector('.alert')
+  const mensagemAlerta = alert.querySelector('span')
+
+  const formulario = document.getElementById('formEditTransacao')
+
+  const objloading = formulario.querySelector('.objloadingedit')
+
+  const nome = formulario.querySelector('#inputNomeEdit').value 
+  const valor = formulario.querySelector('#inputValorEdit').value 
+  const data = formulario.querySelector('#inputDataEdit').value 
+  const tipo = formulario.querySelector('#inputTipoEdit').value 
+  const observacao = formulario.querySelector('#inputObsEdit').value 
+
+  const valorData = data
+
+    const dataComHifens = valorData;
+    const partes = dataComHifens.split("-");
+    const dataComBarras = partes.reverse().join("/");
+
+    const dataComBarras2 = funcoesCadastro.converterDataFormato(dataComBarras)
+  
+    const vmes = dataParaNomeDoMes(dataComBarras)
+    const vano = dataComBarras.slice(-4)
+
+
+  const objFormulario = {
+
+    nome: nome ,
+    valor: parseFloat(valor) ,
+    data: dataComBarras2 ,
+    mes : vmes,
+    ano:vano,
+    tipo: tipo ,
+    observacao: observacao 
+    
+
+  }
+
+  objloading.classList.add('flex')
+  objloading.classList.remove('hidden')
+
+  try {
+
+    await updateDoc(doc(db, "transacoes", IDobjTransacaoSelecionada), objFormulario );
+
+      alert.classList.add('alert-success')
+
+      mensagemAlerta.textContent=`${objTransacaoSelecionada.nome} editada com sucesso!`
+
+      alert.classList.add("flex")
+      alert.classList.remove("hidden")
+
+      retornarTodosDocumentos()
+
+      setTimeout(()=>{ 
+
+        
+
+        alert.classList.remove("flex")
+       alert.classList.add("hidden")
+
+       objloading.classList.remove('flex')
+       objloading.classList.add('hidden')
+
+       modalEditTransacao.classList.remove('flex')
+       modalEditTransacao.classList.add('hidden')
+
+       
+  
+      
+      },3000)
+
+  
+    
+    
+  } catch (error) {
+
+    alert.classList.add('alert-error')
+      mensagemAlerta.textContent = 'Falha ao tentar editar a transação, tente mais tarde...'
+      console.log(error)
+      alert.classList.add("flex")
+      alert.classList.remove("hidden")
+
+      setTimeout(()=>{ 
+
+        alert.classList.remove("flex")
+        alert.classList.add("hidden")
+
+        objloading.classList.remove('flex')
+        objloading.classList.add('hidden')
+      
+      
+      },3000)
+
+    
+  }
+
+ 
 
 
 }

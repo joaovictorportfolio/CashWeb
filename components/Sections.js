@@ -23,15 +23,17 @@ class section01 extends HTMLElement {
 
       <alert-01></alert-01>
 
-       <container-pai class="animate__animated animate__fadeInRight"></container-pai>
+      <container-pai class="animate__animated animate__fadeInRight"></container-pai>
 
-       <galeria-vazia></galeria-vazia>
+      <galeria-vazia></galeria-vazia>
 
-       <div id="carregandoGaleria" class="bg-base-100 h-screen w-full fixed hidden flex-col items-center justify-center top-0 left-0 z-[1]">
+      <div id="carregandoGaleria" class="bg-base-100 h-screen w-full fixed hidden flex-col items-center justify-center top-0 left-0 z-[1]">
 
         <span class="loading loading-spinner text-primary"></span>
 
       </div>
+
+      <modal-edit ></modal-edit>
       
       
   </section>

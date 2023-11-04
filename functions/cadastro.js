@@ -184,7 +184,7 @@ export async function adicionarEventosCadastro(){
 
 
 
-function converterDataFormato(data) {
+export function converterDataFormato(data) {
   const partes = data.split('/');
   if (partes.length === 3) {
     const dia = partes[0];

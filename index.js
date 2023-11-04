@@ -15,6 +15,7 @@ import * as componentesForm from './components/Form.js'
 import * as componentesLoading from './components/Loading.js'
 import * as componentesAlerts from './components/Alerts.js'
 import * as componentesHistorico from './components/Historico.js'
+import * as componentesmodalEdit from './components/modalEdit.js'
 
 // =================================== FUNCOES =============================================== //
 

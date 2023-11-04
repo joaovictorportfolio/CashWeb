@@ -55,7 +55,7 @@ class formcadastro extends HTMLElement {
     </label>
 
     <span>
-      <input id="inputValor" type="number" min="1" step="0.1" placeholder="Valor da transação" required class="input input-bordered input-md w-full max-w-xs" />
+      <input id="inputValor" type="number" min="1" step="0.01" placeholder="Valor da transação" required class="input input-bordered input-md w-full max-w-xs" />
     </span>
     
     <label class="label">

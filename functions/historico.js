@@ -744,6 +744,12 @@ async function deletarTransacao(idTransacao,nome){
   const alert = section01.querySelector('.alert')
   const mensagemAlerta = alert.querySelector('span')
 
+  window.scrollTo({
+    top: 0, // Define a posição para o topo da página
+    behavior: 'smooth', // Role suavemente (opcional)
+  });
+
+
   try {
 
      await deleteDoc(doc(db, "transacoes", idTransacao));
@@ -756,11 +762,6 @@ async function deletarTransacao(idTransacao,nome){
 
       alert.classList.add("flex")
       alert.classList.remove("hidden")
-
-      window.scrollTo({
-        top: 0, // Define a posição para o topo da página
-        behavior: 'smooth', // Role suavemente (opcional)
-      });
 
       retornarTodosDocumentos()
 

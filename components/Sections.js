@@ -19,7 +19,7 @@ class section01 extends HTMLElement {
     
   <!-- Codigo -->
 
-  <section id="section01" class="lg:h-screen pt-10 lg:pt-24  bg-base-100 flex items-start justify-center animate__animated animate__fadeIn animate__slow relative">
+  <section id="section01" class="lg:h-screen pt-10 lg:pt-24  bg-base-100 flex items-start justify-center animate__animated animate__fadeIn animate__slow ">
 
       <alert-01></alert-01>
 

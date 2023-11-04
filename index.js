@@ -73,7 +73,7 @@ funcoesCadastro.adicionarEventosCadastro()
 funcoesHistorico.adicionarEventos()
 
 
-//funcoesHistorico.inserirDadosAleatoriosTransacoes(10)
+//funcoesHistorico.inserirDadosAleatoriosTransacoes(20)
 
 
 

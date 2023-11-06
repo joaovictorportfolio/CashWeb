@@ -561,7 +561,7 @@ function pesquisarInputGaleria(){
 // ----------------------------------------------------------------------------
 
 
-function converterData(dataNoFormatoISO) {
+export function converterData(dataNoFormatoISO) {
   const partesData = dataNoFormatoISO.split('/'); // Divide a data em partes
 
   if (partesData.length !== 3) {
@@ -722,7 +722,7 @@ export function extrairAnoDaData(dataString) {
 // ----------------------------------------------------------------------------
 
 
-function limparObjetoPai(container) {
+export function limparObjetoPai(container) {
 
   //const container = document.getElementById('galeriaTransacoes')
 

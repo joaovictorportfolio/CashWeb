@@ -19,7 +19,7 @@
 
 .itensListaPesquisa{@apply py-2 px-2 text-sm hover:text-base-100 hover:bg-primary rounded-b-md w-full cursor-pointer !important}
 
-
+.cardRelatorio{@apply max-lg:w-[250px]  !important}
 
 
 

@@ -16,6 +16,7 @@ import * as componentesLoading from './components/Loading.js'
 import * as componentesAlerts from './components/Alerts.js'
 import * as componentesHistorico from './components/Historico.js'
 import * as componentesmodalEdit from './components/modalEdit.js'
+import * as componentesdashboard from './components/dashboard.js'
 
 // =================================== FUNCOES =============================================== //
 
@@ -27,6 +28,7 @@ import * as funcoesGerarID from './functions/gerarID.js'
 import * as funcoesdadosLocais from './functions/localstorage.js'
 import * as funcoesHistorico from './functions/historico.js'
 import * as funcoesCadastro from './functions/cadastro.js'
+import * as funcoesRelatorio from './functions/relatorio.js'
 
 
 
@@ -73,8 +75,12 @@ funcoesCadastro.adicionarEventosCadastro()
 
 funcoesHistorico.adicionarEventos()
 
+// -- adicionar eventos relatorio -- //
 
-//funcoesHistorico.inserirDadosAleatoriosTransacoes(20)
+funcoesRelatorio.adicionarEventosRelatorio()
+
+
+//funcoesHistorico.inserirDadosAleatoriosTransacoes(30)
 
 
 

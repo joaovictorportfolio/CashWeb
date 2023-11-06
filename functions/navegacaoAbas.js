@@ -1,6 +1,7 @@
 
 import * as funcoesCadastro from './cadastro.js'
 import * as funcoesHistorico from './historico.js'
+import * as funcoesRelatorio from './relatorio.js'
 
 
 
@@ -92,6 +93,8 @@ export async function alterarAba(nomeAba){
       } 
     
     })
+
+      funcoesRelatorio.iniciarRelatorio()
     
       break;
    

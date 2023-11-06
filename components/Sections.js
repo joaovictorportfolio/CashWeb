@@ -119,9 +119,13 @@ class section01 extends HTMLElement {
     
   <!-- Codigo -->
 
-    <section id="section03" class="h-screen hidden items-center justify-center bg-base-100 animate__animated animate__fadeIn animate__slow">
+    <section id="section03" class="lg:h-screen pt-10 lg:pt-24  bg-base-100 flex items-start justify-center animate__animated animate__fadeIn animate__slow">
+
+    <div id="loadingRelatorio" class="fixed bg-base-100 h-screen w-full z-[1] flex items-center justify-center">
+    <span class="loading loading-spinner text-primary"></span>
+    </div>
     
-      
+      <container-dashboard></container-dashboard>
     
     
     

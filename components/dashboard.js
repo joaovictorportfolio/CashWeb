@@ -381,6 +381,10 @@ class containerdashboard extends HTMLElement {
   <!-- Codigo -->
 
   <div class=" flex flex-col gap-6 ">
+
+  <div class="bg-base-100 text-neutral p-4 drop-shadow-lg rounded-lg">
+    <div id="chart01"></div>
+  </div>
     
       
 
@@ -396,6 +400,11 @@ class containerdashboard extends HTMLElement {
 
       // Metodos
 
+  
+
+      // -----------------------------------
+    
+
 
 
       // -----------------------------------
@@ -406,6 +415,8 @@ class containerdashboard extends HTMLElement {
   customElements.define("container-graficos", containergraficos);
 
   // ------------------------------------------------------
+
+
 
 
 

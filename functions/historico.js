@@ -53,6 +53,8 @@ let objTransacaoSelecionada
 
 let IDobjTransacaoSelecionada
 
+let editar
+
 
 // =================================== FUNCOES =============================================== //
 
@@ -275,6 +277,8 @@ export async function retornarDocumentosGaleria(){
 
     iconEditCard.addEventListener('click',()=>{ 
 
+      editar = true
+
       modalEditTransacao.classList.remove('hidden')
       modalEditTransacao.classList.add('flex')
 
@@ -480,8 +484,12 @@ export async function adicionarEventos(){
 
   const formEditTransacao = document.getElementById('formEditTransacao')
 
+  const btnFecharModalEdit = document.getElementById('btnFecharModalEdit')
 
-  formEditTransacao.addEventListener('submit',()=>{ event.preventDefault()  ; editarTransacao() })
+  btnFecharModalEdit.addEventListener('click',()=>{ editar = false  })
+
+
+  formEditTransacao.addEventListener('submit',(event)=>{ event.preventDefault()  ; editarTransacao() })
 
   atualizar.addEventListener('click',()=>{ retornarTodosDocumentos() })
 
@@ -866,7 +874,7 @@ async function editarTransacao(){
 
   //console.log(objTransacaoSelecionada)
 
-  
+  if(!editar){return}
 
   const modalEditTransacao = document.getElementById('modalEditTransacao')
   const alert = modalEditTransacao.querySelector('.alert')
@@ -909,6 +917,8 @@ async function editarTransacao(){
 
   objloading.classList.add('flex')
   objloading.classList.remove('hidden')
+
+  console.log('submit')
 
   try {
 

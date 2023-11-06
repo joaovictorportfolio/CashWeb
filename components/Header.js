@@ -22,7 +22,7 @@ class header01 extends HTMLElement {
 
     <div class="navbar-start ">
 
-      <logo-01 urlImagem="https://i.ibb.co/dPKTnGH/logo.png" ></logo-01>
+      <logo-01 urlImagem="https://i.ibb.co/6rC0ntD/image.png" ></logo-01>
 
     </div>
 

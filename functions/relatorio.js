@@ -83,9 +83,7 @@ export function iniciarRelatorio(){
 
    
 
-    loadingRelatorio.classList.add('hidden')
-    loadingRelatorio.classList.remove('flex')
-
+   
 }
 
 
@@ -305,6 +303,9 @@ function filtrarGaleria(){
     }
   
     consulta = query(col, where("idUsuario", "==", idUsuario),...filters )
+
+    loadingRelatorio.classList.remove('hidden')
+    loadingRelatorio.classList.add('flex')
   
   
   }
@@ -316,7 +317,7 @@ export async function adicionarEventosRelatorio(){
 
     const btnFiltroRelatorio = document.getElementById("btnFiltroRelatorio")
 
-    btnFiltroRelatorio.addEventListener('click',async()=>{ await filtrarGaleria(); atualizarRelatorio() })
+    btnFiltroRelatorio.addEventListener('click',async()=>{ filtrarGaleria(); atualizarRelatorio() })
 
 
 
@@ -333,7 +334,10 @@ async function atualizarRelatorio(){
     retornarDespesaTotal()
     retornarSaldoTotal()
     grafico01()
+    grafico02()
 
+    loadingRelatorio.classList.add('hidden')
+    loadingRelatorio.classList.remove('flex')
 
 
 
@@ -363,6 +367,9 @@ function ordenarMeses(listaMeses) {
 
 
 // ---------------------------------------------
+
+let chartRenderizado = false; 
+let chart
 
 async function grafico01(){
 
@@ -397,8 +404,8 @@ transacoes.forEach((transacao) => {
   }
 });
 
-// Agora você tem um mapeamento de cada mês para os valores de "Receita" e "Despesa"
-console.log(dadosPorMes);
+
+//console.log(dadosPorMes);
 
 const ordemMeses = [
   "Jan", "Fev", "Mar", "Abr", "Mai", "Jun",
@@ -415,21 +422,16 @@ meses.sort((a, b) => ordemMeses.indexOf(a) - ordemMeses.indexOf(b));
 const receitas = meses.map((mes) => dadosPorMes[mes].Receita.toFixed(2));
 const despesas = meses.map((mes) => dadosPorMes[mes].Despesa.toFixed(2));
 
-console.log(receitas);
+//console.log(receitas);
 
-console.log(despesas);
+//console.log(despesas);
 
-console.log(meses)
-
-
-
-
-
+//console.log(meses)
 
   var options = {
     
     chart: {
-        height: "100%",
+        height: "300px",
         width: "100%",
         type: "line",
         fontFamily: "Inter, sans-serif",
@@ -438,6 +440,14 @@ console.log(meses)
         },
         toolbar: {
           show: false,
+        },
+      },
+      title: {
+        text: 'Receita x despesa',
+        style: {
+          fontSize:  '18px',
+          fontWeight:  'bold',
+          color:  '#c9c9c9'
         },
       },
       tooltip: {
@@ -456,16 +466,18 @@ console.log(meses)
         show: false,
         strokeDashArray: 4,
         padding: {
-          left: 2,
+          left: 20,
           right: 2,
           top: -26
         },
       },
       series: [
+        
         {
           name: "Receita",
           data: receitas,
           color: "#36d399",
+          
         },
         {
           name: "Despesa",
@@ -485,7 +497,7 @@ console.log(meses)
           show: true,
           style: {
             fontFamily: "Inter, sans-serif",
-            cssClass: 'text-xs font-normal text-base-100 '
+            cssClass: 'text-xs font-normal text-base-100'
           }
         },
         axisBorder: {
@@ -500,8 +512,16 @@ console.log(meses)
       },
   };
 
-  var chart = new ApexCharts(document.querySelector("#chart"), options);
-  chart.render();
+   // Verifica se o gráfico já foi renderizado
+   if (chartRenderizado) {
+    // Atualiza as opções se o gráfico já foi renderizado
+    chart.updateOptions(options);
+  } else {
+    // Cria uma nova instância do gráfico e marca como renderizado
+    chart = new ApexCharts(document.querySelector("#chart"), options);
+    chart.render();
+    chartRenderizado = true; // Marque o gráfico como renderizado
+  }
 
 
 
@@ -510,6 +530,104 @@ console.log(meses)
 
 }
 
+
+// ---------------------------------------------
+
+let chartRenderizado2 = false; 
+let chart2
+
+async function grafico02(){
+
+  const querySnapshot = await getDocs(consulta);
+  
+  const despesasTotais  = {};
+  
+  querySnapshot.forEach((doc) => {
+  
+    const dados = doc.data()
+
+      if( dados.tipo == 'Despesa' ){ 
+        
+        const despesa = dados.nome; 
+        const valor = parseFloat(dados.valor);
+
+        if (!despesasTotais[despesa]) {
+          despesasTotais[despesa] = 0;
+        }
+    
+        despesasTotais[despesa] += valor;
+      
+      }
+  
+  
+  });
+
+  // Ordenar as despesas com base no total
+  const despesasOrdenadas = Object.entries(despesasTotais)
+    .sort(([, a], [, b]) => b - a) // Ordenar em ordem decrescente
+    .slice(0, 10) // Pegar as 10 despesas mais altas
+  
+  const listadespesas = despesasOrdenadas.map(([despesa, total]) => `${despesa}`);
+  
+  //console.log(listadespesas)
+  
+  
+  
+  var options = {
+    series: [{
+    data: despesasOrdenadas.map(([, total]) => total),
+    color:'#f37b7b'
+  }],
+    chart: {
+    type: 'bar',
+    height: 350,
+    toolbar: {
+      show: false,
+    }
+  },
+  plotOptions: {
+    bar: {
+      borderRadius: 4,
+      horizontal: true,
+    }
+  },
+  dataLabels: {
+    enabled: false
+  },
+  title: {
+    text: 'Top 10 despesas',
+    style: {
+      fontSize:  '18px',
+      fontWeight:  'bold',
+      color:  '#c9c9c9'
+    },
+  },
+  xaxis: {
+    categories: listadespesas,
+    
+  },
+ 
+  }
+
+
+
+  // Verifica se o gráfico já foi renderizado
+  if (chartRenderizado2) {
+    // Atualiza as opções se o gráfico já foi renderizado
+    chart2.updateOptions(options);
+  } else {
+    // Cria uma nova instância do gráfico e marca como renderizado
+    chart2 = new ApexCharts(document.querySelector("#chart2"), options);
+    chart2.render();
+    chartRenderizado2 = true; // Marque o gráfico como renderizado
+  }
+  
+  
+  
+  
+  
+  
+  }
 
   
 

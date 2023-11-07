@@ -22,7 +22,7 @@ class containerdashboard extends HTMLElement {
   <!-- Codigo -->
 
   <!-- Container Pai -->
-  <div class="flex flex-col max-w-4xl w-full max-lg:mt-14 px-4 gap-10 mb-32 ">
+  <div class="flex flex-col max-w-4xl w-full max-lg:mt-14 px-4 gap-10 mb-32 h-full">
 
       <filtro-dashboard></filtro-dashboard>
 
@@ -123,7 +123,7 @@ class containerdashboard extends HTMLElement {
     
   <!-- Codigo -->
 
-  <button title="filtro" class="btn btn-square hover:btn-secondary hover:text-white fixed right-4 bottom-24 z-[1]" onclick="my_modal_5.showModal()">
+  <button title="filtro" class="btn btn-square hover:btn-secondary hover:text-white fixed right-4 lg:right-8 bottom-24 z-[1]" onclick="my_modal_5.showModal()">
     
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
 
@@ -224,7 +224,7 @@ class containerdashboard extends HTMLElement {
     
   <!-- Codigo -->
 
-  <div class="stats shadow flex max-lg:flex-col  cardRelatorio">
+  <div class="stats shadow flex max-lg:flex-col  cardRelatorio border">
 
     <div class="stat place-items-center space-y-1">
 
@@ -276,7 +276,7 @@ class containerdashboard extends HTMLElement {
     
   <!-- Codigo -->
 
-  <div class="stats shadow flex max-lg:flex-col  cardRelatorio">
+  <div class="stats shadow flex max-lg:flex-col  cardRelatorio border">
 
     <div class="stat place-items-center space-y-1">
 
@@ -328,7 +328,7 @@ class containerdashboard extends HTMLElement {
     
   <!-- Codigo -->
 
-  <div class="stats shadow flex max-lg:flex-col  cardRelatorio">
+  <div class="stats shadow flex max-lg:flex-col  cardRelatorio border">
 
     <div class="stat place-items-center space-y-1">
 
@@ -380,9 +380,13 @@ class containerdashboard extends HTMLElement {
     
   <!-- Codigo -->
 
-  <div class=" flex flex-col gap-6 w-full">
+  <div class=" flex flex-col gap-8 w-full">
 
-      <div id="chart" class=" w-full rounded-lg drop-shadow-lg p-2 border bg-base-100 flex items-center justify-center"></div>
+      
+
+      <div id="chart" class=" w-full rounded-lg drop-shadow-lg p-2 border bg-base-100 flex items-center justify-center flex-col gap-2 h-96 "></div>
+
+      <div id="chart2" class=" w-full rounded-lg drop-shadow-lg p-2 pt-2 border bg-base-100 flex items-center justify-center flex-col gap-2 h-96"></div>
     
       
 

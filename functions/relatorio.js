@@ -328,11 +328,11 @@ export async function adicionarEventosRelatorio(){
 
 async function atualizarRelatorio(){
 
+
     retornarReceitaTotal()
     retornarDespesaTotal()
     retornarSaldoTotal()
     grafico01()
-   
 
 
 
@@ -364,92 +364,146 @@ function ordenarMeses(listaMeses) {
 
 // ---------------------------------------------
 
-function grafico01(){
+async function grafico01(){
+
+const querySnapshot = await getDocs(consulta);
+
+const transacoes = [];
+
+querySnapshot.forEach((doc) => {
+
+  const data = doc.data();
+
+  transacoes.push(data);
+
+});
 
 
-        let options = {
-          // add data series via arrays, learn more here: https://apexcharts.com/docs/series/
-          series: [
-            {
-              name: "Developer Edition",
-              data: [1500, 1418, 1456, 1526, 1356, 1256],
-              color: "#1A56DB",
-            },
-            {
-              name: "Designer Edition",
-              data: [643, 413, 765, 412, 1423, 1731],
-              color: "#7E3BF2",
-            },
-          ],
-          chart: {
-            height: "100%",
-            maxWidth: "100%",
-            type: "area",
+const dadosPorMes = {};
+
+transacoes.forEach((transacao) => {
+  const mes = transacao.mes.slice(0, 3);
+  const valor = parseFloat(transacao.valor);
+  const tipo = transacao.tipo;
+
+  if (!dadosPorMes[mes]) {
+    dadosPorMes[mes] = { Receita: 0, Despesa: 0 };
+  }
+
+  if (tipo === "Receita") {
+    dadosPorMes[mes].Receita += valor;
+  } else if (tipo === "Despesa") {
+    dadosPorMes[mes].Despesa += valor;
+  }
+});
+
+// Agora você tem um mapeamento de cada mês para os valores de "Receita" e "Despesa"
+console.log(dadosPorMes);
+
+const ordemMeses = [
+  "Jan", "Fev", "Mar", "Abr", "Mai", "Jun",
+  "Jul", "Ago", "Set", "Out", "Nov", "Dez"
+];
+
+
+
+const meses = Object.keys(dadosPorMes);
+
+// Ordene os meses de acordo com a ordem definida
+meses.sort((a, b) => ordemMeses.indexOf(a) - ordemMeses.indexOf(b));
+
+const receitas = meses.map((mes) => dadosPorMes[mes].Receita.toFixed(2));
+const despesas = meses.map((mes) => dadosPorMes[mes].Despesa.toFixed(2));
+
+console.log(receitas);
+
+console.log(despesas);
+
+console.log(meses)
+
+
+
+
+
+
+  var options = {
+    
+    chart: {
+        height: "100%",
+        width: "100%",
+        type: "line",
+        fontFamily: "Inter, sans-serif",
+        dropShadow: {
+          enabled: false,
+        },
+        toolbar: {
+          show: false,
+        },
+      },
+      tooltip: {
+        enabled: true,
+        x: {
+          show: true,
+        },
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+        width: 6,
+      },
+      grid: {
+        show: false,
+        strokeDashArray: 4,
+        padding: {
+          left: 2,
+          right: 2,
+          top: -26
+        },
+      },
+      series: [
+        {
+          name: "Receita",
+          data: receitas,
+          color: "#36d399",
+        },
+        {
+          name: "Despesa",
+          data: despesas,
+          color: "#f37b7b",
+        },
+      ],
+      legend: {
+        show: false
+      },
+      stroke: {
+        curve: 'smooth'
+      },
+      xaxis: {
+        categories: meses,
+        labels: {
+          show: true,
+          style: {
             fontFamily: "Inter, sans-serif",
-            dropShadow: {
-              enabled: false,
-            },
-            toolbar: {
-              show: false,
-            },
-          },
-          tooltip: {
-            enabled: true,
-            x: {
-              show: false,
-            },
-          },
-          legend: {
-            show: false
-          },
-          fill: {
-            type: "gradient",
-            gradient: {
-              opacityFrom: 0.55,
-              opacityTo: 0,
-              shade: "#1C64F2",
-              gradientToColors: ["#1C64F2"],
-            },
-          },
-          dataLabels: {
-            enabled: false,
-          },
-          stroke: {
-            width: 6,
-          },
-          grid: {
-            show: false,
-            strokeDashArray: 4,
-            padding: {
-              left: 2,
-              right: 2,
-              top: 0
-            },
-          },
-          xaxis: {
-            categories: ['01 February', '02 February', '03 February', '04 February', '05 February', '06 February', '07 February'],
-            labels: {
-              show: true,
-            },
-            axisBorder: {
-              show: false,
-            },
-            axisTicks: {
-              show: false,
-            },
-          },
-          yaxis: {
-            show: false,
-            labels: {
-              formatter: function (value) {
-                return '$' + value;
-              }
-            }
-          },
-        }
+            cssClass: 'text-xs font-normal text-base-100 '
+          }
+        },
+        axisBorder: {
+          show: false,
+        },
+        axisTicks: {
+          show: false,
+        },
+      },
+      yaxis: {
+        show: false,
+      },
+  };
 
-      var chart = new ApexCharts(document.querySelector("#chart01"), options);
-      chart.render();
+  var chart = new ApexCharts(document.querySelector("#chart"), options);
+  chart.render();
+
+
 
 
 

@@ -387,6 +387,8 @@ class containerdashboard extends HTMLElement {
       <div id="chart" class=" w-full rounded-lg drop-shadow-lg p-2 border bg-base-100 flex items-center justify-center flex-col gap-2 h-96 "></div>
 
       <div id="chart2" class=" w-full rounded-lg drop-shadow-lg p-2 pt-2 border bg-base-100 flex items-center justify-center flex-col gap-2 h-96"></div>
+
+      <div id="chart3" class=" w-full rounded-lg drop-shadow-lg p-2 pt-2 border bg-base-100 flex items-center justify-center flex-col gap-2 h-96"></div>
     
       
 

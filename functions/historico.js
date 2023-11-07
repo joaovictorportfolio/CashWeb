@@ -83,6 +83,8 @@ export async function iniciarSecaoHistorico(){
 
 export function inserirDadosAleatoriosTransacoes(totalTransacoes){
 
+  const despesas = ["Aluguel", "Condomínio", "Luz", "Água", "Telefone", "Internet", "Supermercado", "Alimentação", "Refeições fora", "Transporte", "Combustível", "Manutenção do carro", "Seguro do carro", "Transporte público", "TV a cabo", "Streaming", "Vestuário", "Calçados", "Acessórios", "Produtos de higiene", "Produtos de limpeza", "Farmácia", "Assinaturas", "Entretenimento", "Academia", "Saúde", "Consultas médicas", "Exames", "Dentista", "Medicamentos", "Seguro saúde", "Educação", "Cursos", "Livros", "Material escolar", "Impostos", "Taxas", "Multas", "Tarifas bancárias", "Juros", "Multa por atraso", "Presentes", "Doações", "Viagens", "Hospedagem", "Passagens", "Lazer"];
+
   const idUsuario = localStorage.getItem('idUsuario')
 
   if(totalTransacoes<0||totalTransacoes==null||totalTransacoes==undefined){return}
@@ -97,7 +99,7 @@ export function inserirDadosAleatoriosTransacoes(totalTransacoes){
     const objFormulario = {
 
       idUsuario : idUsuario ,
-      nome: `Transação ${i}` ,
+      nome: getRandomValueFromArray(despesas) ,
       valor: (1 + Math.random() * (1000 - 1)).toFixed(2) ,
       data: data ,
       mes:vmes,

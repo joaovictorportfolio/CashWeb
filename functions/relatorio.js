@@ -43,6 +43,8 @@ import * as funcoesHistorico from './historico.js'
 
 const loadingRelatorio = document.getElementById("loadingRelatorio")
 
+const relatoriovazio = document.getElementById("relatoriovazio")
+
 const idUsuario = localStorage.getItem('idUsuario')
 
 const col = collection(db, 'transacoes')
@@ -329,15 +331,35 @@ export async function adicionarEventosRelatorio(){
 
 async function atualizarRelatorio(){
 
+  const q = query(col, where("idUsuario", "==", idUsuario));
+  
+  const querySnapshot = await getDocs(q);
+
+  const totalRegistros = querySnapshot.size
+
+  if( totalRegistros > 0 ){
+
 
     retornarReceitaTotal()
     retornarDespesaTotal()
     retornarSaldoTotal()
     grafico01()
     grafico02()
+    grafico03()
 
-    loadingRelatorio.classList.add('hidden')
-    loadingRelatorio.classList.remove('flex')
+    
+
+    relatoriovazio.classList.add('hidden')
+    relatoriovazio.classList.remove('flex')
+}else{
+  relatoriovazio.classList.remove('hidden')
+  relatoriovazio.classList.add('flex')
+
+}
+
+loadingRelatorio.classList.add('hidden')
+loadingRelatorio.classList.remove('flex')
+    
 
 
 
@@ -433,7 +455,7 @@ const despesas = meses.map((mes) => dadosPorMes[mes].Despesa.toFixed(2));
     chart: {
         height: "300px",
         width: "100%",
-        type: "line",
+        type: "area",
         fontFamily: "Inter, sans-serif",
         dropShadow: {
           enabled: false,
@@ -455,6 +477,11 @@ const despesas = meses.map((mes) => dadosPorMes[mes].Despesa.toFixed(2));
         x: {
           show: true,
         },
+        y:{
+          formatter: function (value) {
+            return "R$" + value.toFixed(2);
+          }
+        }
       },
       dataLabels: {
         enabled: false,
@@ -592,7 +619,26 @@ async function grafico02(){
     }
   },
   dataLabels: {
-    enabled: false
+    enabled: true,
+    formatter: function (value) {
+      return "R$ " + value.toFixed(2);
+    }
+  },
+  tooltip: {
+    enabled: true,
+    x: {
+      show: true,
+    },
+    z: {
+      formatter: undefined,
+      title: 'Size: '
+  },
+    y: {
+      formatter: function (value) {
+        return "R$" + value.toFixed(2);
+      },
+
+    },
   },
   title: {
     text: 'Top 10 despesas',
@@ -620,6 +666,178 @@ async function grafico02(){
     chart2 = new ApexCharts(document.querySelector("#chart2"), options);
     chart2.render();
     chartRenderizado2 = true; // Marque o gráfico como renderizado
+  }
+  
+  
+  
+  
+  
+  
+  }
+
+
+// ---------------------------------------------
+
+let chartRenderizado3 = false; 
+let chart3
+
+async function grafico03(){
+
+  const querySnapshot = await getDocs(consulta);
+  const transacoes = [];
+
+  querySnapshot.forEach((doc) => {
+    const data = doc.data();
+    transacoes.push(data);
+  });
+
+  const dadosPorMes = {};
+
+  transacoes.forEach((transacao) => {
+    const mes = transacao.mes.slice(0, 3);
+    const valor = parseFloat(transacao.valor);
+    const tipo = transacao.tipo;
+
+    if (!dadosPorMes[mes]) {
+      dadosPorMes[mes] = { Receita: 0, Despesa: 0 };
+    }
+
+    if (tipo === "Receita") {
+      dadosPorMes[mes].Receita += valor;
+    } else if (tipo === "Despesa") {
+      dadosPorMes[mes].Despesa += valor;
+    }
+  });
+
+  const ordemMeses = [
+    "Jan", "Fev", "Mar", "Abr", "Mai", "Jun",
+    "Jul", "Ago", "Set", "Out", "Nov", "Dez"
+  ];
+
+  const meses = Object.keys(dadosPorMes);
+
+  // Ordene os meses de acordo com a ordem definida
+  meses.sort((a, b) => ordemMeses.indexOf(a) - ordemMeses.indexOf(b));
+
+  const saldos = meses.map((mes) => (dadosPorMes[mes].Receita - dadosPorMes[mes].Despesa).toFixed(2));
+
+  
+  
+  
+  var options = {
+    
+    chart: {
+        height: "300px",
+        width: "100%",
+        type: "line",
+        fontFamily: "Inter, sans-serif",
+        dropShadow: {
+          enabled: false,
+        },
+        toolbar: {
+          show: false,
+        },
+      },
+      title: {
+        text: 'Saldo mensal',
+        style: {
+          fontSize:  '18px',
+          fontWeight:  'bold',
+          color:  '#c9c9c9'
+        },
+      },
+      tooltip: {
+        enabled: true,
+        x: {
+          show: true,
+        },
+        y: {
+          formatter: function (value) {
+            return "R$ " + value.toFixed(2);
+          }
+        },
+      },
+      dataLabels: {
+        enabled: true,
+        formatter: function (value) {
+          return "R$" + value.toFixed(2);
+        }
+        
+      },
+      stroke: {
+        width: 6,
+        
+      },
+      grid: {
+        show: false,
+        strokeDashArray: 4,
+        padding: {
+          left: 20,
+          right: 2,
+          top: -26
+        },
+      },
+      series: [
+        
+        {
+          name: "Saldo",
+          data: saldos,
+          color: "#36d399",
+        },
+      ],
+      legend: {
+        show: false
+      },
+      stroke: {
+        curve: 'stepline',
+      },
+      xaxis: {
+        categories: meses,
+        labels: {
+          show: true,
+          style: {
+            fontFamily: "Inter, sans-serif",
+            cssClass: 'text-xs font-normal text-base-100'
+          }
+        },
+        axisBorder: {
+          show: false,
+        },
+        axisTicks: {
+          show: false,
+        },
+      },
+      yaxis: {
+        show: false,
+      },
+
+      annotations: {
+        yaxis: [
+          {
+            y: 0, // Valor zero
+            borderColor: '#FF0000', // Cor vermelha
+            label: {
+              borderColor: '#FF0000', // Cor da label
+              style: {
+                color: '#fff' // Cor do texto
+              },
+            }
+          }
+        ]
+      }
+  
+  };
+
+
+  // Verifica se o gráfico já foi renderizado
+  if (chartRenderizado3) {
+    // Atualiza as opções se o gráfico já foi renderizado
+    chart3.updateOptions(options);
+  } else {
+    // Cria uma nova instância do gráfico e marca como renderizado
+    chart3 = new ApexCharts(document.querySelector("#chart3"), options);
+    chart3.render();
+    chartRenderizado3 = true; // Marque o gráfico como renderizado
   }
   
   

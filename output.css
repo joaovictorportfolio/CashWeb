@@ -2680,6 +2680,10 @@ html {
   z-index: 1;
 }
 
+.z-\[2\] {
+  z-index: 2;
+}
+
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -2972,6 +2976,10 @@ html {
 
 .p-2 {
   padding: 0.5rem;
+}
+
+.p-0 {
+  padding: 0px;
 }
 
 .px-4 {
